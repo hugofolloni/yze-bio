@@ -3,9 +3,18 @@ using Profile.Context;
 using Profile.Models;
 using Microsoft.EntityFrameworkCore;
 
+var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+        policy  =>
+        {
+            policy.WithOrigins("http://localhost:3000");
+        });
+});
 // Add services to the container.
 
 
@@ -32,6 +41,8 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+app.UseCors(MyAllowSpecificOrigins);
+
 app.MapControllers();
 
 app.Run();
@@ -41,3 +52,6 @@ app.Run();
 //  MIGRATIONS:
 // dotnet ef migrations add MigracaoInicial 
 // dotnet ef database update MigracaoInicial
+
+// Generate controllers
+// dotnet aspnet-codegenerator controller -name MODELNAMEController -async -api -m MODEL -dc AppDbContext -outDir Controllers 
