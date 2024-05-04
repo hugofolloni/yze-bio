@@ -8,5 +8,6 @@ public class Layout {
     public string? PageBackgroundColor { get; set; }
     public string? FontFamily { get; set; }
     public string? FontColor { get; set; }
+    public string? BaseLayout { get; set; }
 
 }
