@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,52 +26,30 @@ namespace Server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUser()
         {
-            return await _context.User.ToListAsync();
+            return await _context.User.Include(x => x.Layout).Include(x => x.Links).ToListAsync();
         }
 
-        // GET: api/User/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(long id)
+        
+        [HttpGet("/api/Nickname")]
+        public ActionResult GetUserWithLayout([FromQuery] string nickname)
         {
-            var user = await _context.User.FindAsync(id);
+            var result = from user in _context.User
+                            join layout in _context.Layout on user.Id equals layout.UserId
+                            join profilelinks in _context.ProfileLinks on user.Id equals profilelinks.UserId
+                            where user.Nickname == nickname
+                            select new
+                            {
+                               user, layout, profilelinks // Include the associated layout
+                            };
 
-            if (user == null)
+            var userWithLayout = result.FirstOrDefault();
+
+            if (userWithLayout == null)
             {
                 return NotFound();
             }
 
-            return user;
-        }
-
-        // PUT: api/User/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(long id, User user)
-        {
-            if (id != user.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(user).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return Ok(userWithLayout.user);
         }
 
         // POST: api/User
@@ -83,47 +62,59 @@ namespace Server.Controllers
 
             return CreatedAtAction("GetUser", new { id = user.Id }, user);
         }
-
-        // DELETE: api/User/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(long id)
+        private bool UserExists(string nickname)
         {
-            var user = await _context.User.FindAsync(id);
-            if (user == null)
+            return _context.User.Any(u => u.Nickname == nickname);
+        }
+    
+
+        [HttpPatch("{nickname}")]
+        public async Task<IActionResult> PatchUser(string nickname, [FromBody] User user)
+        {
+            try
             {
-                return NotFound();
-            }
+                if (nickname != user?.Nickname)
+                {
+                    return BadRequest("Nickname in URL does not match the nickname in the request body.");
+                }
 
-            _context.User.Remove(user);
-            await _context.SaveChangesAsync();
+                // Find the user by nickname
+                var existingUser = await _context.User
+                    .Include(u => u.Layout)
+                    .Include(u => u.Links)
+                    .FirstOrDefaultAsync(u => u.Nickname == nickname);
 
-            return NoContent();
-        }
+                if (existingUser == null)
+                {
+                    return NotFound("User not found.");
+                }
 
-        private bool UserExists(long id)
-        {
-            return _context.User.Any(e => e.Id == id);
-        }
-
-        [HttpGet("user-with-layout")]
-        public ActionResult GetUserWithLayout([FromQuery] string nickname)
-        {
-            var result = from user in _context.User
-                            join layout in _context.Layout on user.Id equals layout.UserId
-                            where user.Nickname == nickname
-                            select new
+                // Update only the properties that are present in the request body
+                foreach (var property in user.GetType().GetProperties())
+                {
+                    // Exclude the 'Id' property
+                    if (property.Name != "Id")
+                    {
+                        var newValue = property.GetValue(user);
+                        if (newValue != null)
+                        {
+                            var existingProperty = existingUser.GetType().GetProperty(property.Name);
+                            if (existingProperty != null && existingProperty.CanWrite)
                             {
-                               user, layout // Include the associated layout
-                            };
+                                existingProperty.SetValue(existingUser, newValue, null);
+                            }
+                        }
+                    }
+                }
 
-            var userWithLayout = result.FirstOrDefault();
+                await _context.SaveChangesAsync();
 
-            if (userWithLayout == null)
-            {
-                return NotFound();
+                return NoContent();
             }
-
-            return Ok(userWithLayout.user);
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while processing the request. Details: " + ex.Message);
+            }
         }
 
 
