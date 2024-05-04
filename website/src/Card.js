@@ -20,6 +20,7 @@ const CardDiv = styled.div`
     width: 700px;
     height: 400px;
     z-index: 2;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 `
 
 const Card = () => {
@@ -30,15 +31,13 @@ const Card = () => {
     const [pageBackgroundColor, setPageBackgroundColor] = useState("#eaeaea")
 
     useEffect(() => {
-        fetch(`https://localhost:7041/api/User/user-with-layout?nickname=${username}`)
+        fetch(`https://localhost:7041/api/Nickname?nickname=${username}`)
         .then(res => res.json())
         .then(data => {
             console.log(data)
             if(data.status !== 404){
-                console.log(data.title)
                 setPageBackgroundColor(data.layout.pageBackgroundColor)
                 setData(data);
-                console.log(data)
             }
         });
     }, [username])
