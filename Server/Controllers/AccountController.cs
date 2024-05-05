@@ -29,25 +29,17 @@ namespace Server.Controllers
         }
 
         // GET: api/Account/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Account>> GetAccount(long id)
+        [HttpGet("/api/Projects/{username}")]
+        public async Task<ActionResult<Account>> GetAccount(string username)
         {
-             var result = from account in _context.Account
-                join user in _context.User on account.Id equals user.AccountId
-                where account.Id == id
-                select new
-                {
-                    account, user // Include the associated layout
-                };
+            var result = _context.Account.Where(c => c.Username == username).Include(c => c.Users);
 
-            var userWithLayout = result.FirstOrDefault();
-
-            if (userWithLayout == null)
+            if (result == null)
             {
                 return NotFound();
             }
 
-            return Ok(userWithLayout.account);
+            return Ok(result);
         }
 
         [HttpGet("/api/Login/{username}")]
@@ -68,6 +60,12 @@ namespace Server.Controllers
             }
 
             return Ok(userWithLayout);
+        }
+
+        [HttpGet("/api/Exists/{username},{email}")]
+        public bool UserExists(string username, string email)
+        {
+            return _context.Account.Any(u => u.Username == username) || _context.Account.Any(u => u.Email == email);
         }
 
         // PUT: api/Account/5
