@@ -15,7 +15,7 @@ const LayoutStyled = styled.div`
 const Title = styled.span`
     font-size: 32px;
     font-family: ${props => props.layout.fontFamily};
-    color: ${props => props.layout.fontColor};
+    color: ${props => props.layout.titleColor};
     font-weight: 700;
     margin-bottom: 10px;
 `
@@ -23,9 +23,12 @@ const Title = styled.span`
 const Subtitle = styled.span`
     margin-bottom: 20px;
     font-weight: 600;
+    color: ${props => props.layout.fontColor};
 `
 
-const Description = styled.span``
+const Description = styled.span`
+    color: ${props => props.layout.fontColor};
+`
 
 const Basic = (props) => {
 
@@ -39,7 +42,9 @@ const Basic = (props) => {
                 Object.entries(props.data.links).map(([key,value]) => {
                     if(key !== "id" && key !== "userId" && value !== null) return (
                     <a href={value} target="_blank" rel='noreferrer'>{key}</a>
-                )})
+                    )
+                    else return null;
+            })
             }
         </LayoutStyled>
         );

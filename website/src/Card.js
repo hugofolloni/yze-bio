@@ -34,24 +34,31 @@ const Card = () => {
         fetch(`https://localhost:7041/api/Nickname?nickname=${username}`)
         .then(res => res.json())
         .then(data => {
-            console.log(data)
-            if(data.status !== 404){
+            console.log(data.status)
+            if(data.status !== 400 && data.status !== 404){
                 setPageBackgroundColor(data.layout.pageBackgroundColor)
-                setData(data);
+                setData(data);  
+                console.log(data)
+            }   
+            else{
+                console.log("NOT FOUND")
             }
-        });
+        })
     }, [username])
 
 
     return ( 
         <Wrapper pageBackgroundColor={pageBackgroundColor}>
             <Curtain />
-            {(data.status !== 404 && data.status !== 999 && 
+            {(
+                data.layout
+                    && 
                 <CardDiv>
                     <Basic data={data}/>
-                </CardDiv>) || 
+                </CardDiv>) 
+                    || 
                 <div className="sorry">
-                    <span>Sorry, this card does not exist.</span>
+                    <span style={{color:'#1c1c1c'}}>Sorry, this card does not exist. You can create this page right <a href="/create">here.</a></span>
                 </div>
             }
         </Wrapper>
