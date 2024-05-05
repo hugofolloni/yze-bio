@@ -8,5 +8,5 @@ public class ProfileLinks {
     public string? Twitter { get; set; }
     public string? LastFm { get; set; }
     public string? Spotify { get; set; }
-    public string? Lettebocd { get; set; }
+    public string? Letteboxd { get; set; }
 }

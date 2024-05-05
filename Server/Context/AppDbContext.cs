@@ -13,6 +13,13 @@ public class AppDbContext : DbContext {
     public DbSet<ProfileLinks>? ProfileLinks { get; set; }
     
     protected override void OnModelCreating(ModelBuilder mb){
+        mb.Entity<Account>().HasKey(c => c.Id);
+        mb.Entity<Account>().Property(c => c.Username).HasMaxLength(100);
+        mb.Entity<Account>().Property(c => c.Password).HasMaxLength(200);
+        mb.Entity<Account>().Property(c => c.Email).HasMaxLength(100);
+        mb.Entity<Account>().Property(c => c.Confirmed);
+        mb.Entity<Account>().HasMany(c => c.Users).WithOne().HasForeignKey(c => c.AccountId);
+
         mb.Entity<User>().HasKey(c => c.Id);
         mb.Entity<User>().Property(c => c.Nickname).HasMaxLength(30);
         mb.Entity<User>().Property(c => c.Title).HasMaxLength(30);
@@ -36,9 +43,10 @@ public class AppDbContext : DbContext {
         mb.Entity<ProfileLinks>().Property(c => c.Twitter).HasMaxLength(40);
         mb.Entity<ProfileLinks>().Property(c => c.LastFm).HasMaxLength(40);
         mb.Entity<ProfileLinks>().Property(c => c.Spotify).HasMaxLength(40);
-        mb.Entity<ProfileLinks>().Property(c => c.Lettebocd).HasMaxLength(40);
+        mb.Entity<ProfileLinks>().Property(c => c.Letteboxd).HasMaxLength(40);
 
     }
+    public DbSet<Profile.Models.Account> Account { get; set; } = default!;
 
 
 }
