@@ -32,19 +32,23 @@ const Description = styled.span`
 
 const Basic = (props) => {
 
-
+    console.log(props.data.links)
     return (  
         <LayoutStyled layout={props.data.layout}>
             <Title layout={props.data.layout}>{props.data.title}</Title>
             <Subtitle layout={props.data.layout}>{props.data.subtitle}</Subtitle>
             <Description layout={props.data.layout}>{props.data.description}</Description>
             {
-                Object.entries(props.data.links).map(([key,value]) => {
-                    if(key !== "id" && key !== "userId" && value !== null) return (
-                    <a href={value} target="_blank" rel='noreferrer'>{key}</a>
-                    )
-                    else return null;
-            })
+               props.data.links.map(item => (
+                    <a href={item.value} target="_blank" rel='noreferrer'>{item.type}</a>
+               ))
+            }
+            {
+                props.data.interests !== null && (
+                    props.data.interests.map(item => (
+                        <span className="interest">{item.emoji} {item.interest}</span>
+                    ))
+                )
             }
         </LayoutStyled>
         );

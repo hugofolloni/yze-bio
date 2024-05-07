@@ -31,15 +31,16 @@ namespace Server.Controllers
 
         
         [HttpGet("/api/Nickname")]
-        public ActionResult GetUserWithLayout([FromQuery] string nickname)
+        public ActionResult GetUser([FromQuery] string nickname)
         {
             var result = from user in _context.User
                             join layout in _context.Layout on user.Id equals layout.UserId
                             join profilelinks in _context.ProfileLinks on user.Id equals profilelinks.UserId
+                            join interests in _context.Interests on user.Id equals interests.UserId
                             where user.Nickname == nickname
                             select new
                             {
-                               user, layout, profilelinks // Include the associated layout
+                               user, layout, profilelinks, interests // Include the associated layout
                             };
 
             var userWithLayout = result.FirstOrDefault();
@@ -82,6 +83,7 @@ namespace Server.Controllers
                 var existingUser = await _context.User
                     .Include(u => u.Layout)
                     .Include(u => u.Links)
+                    .Include(u => u.Interests)
                     .FirstOrDefaultAsync(u => u.Nickname == nickname);
 
                 if (existingUser == null)

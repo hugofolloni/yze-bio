@@ -8,9 +8,12 @@ public class AppDbContext : DbContext {
 
     }
 
-    public DbSet<Layout>? Layout { get; set; }
+    public DbSet<Account>? Account { get; set; }
     public DbSet<User>? User { get; set; }
+    public DbSet<Layout>? Layout { get; set; }
     public DbSet<ProfileLinks>? ProfileLinks { get; set; }
+    public DbSet<Interests>? Interests { get; set; }
+    public DbSet<Questions>? Questions { get; set; }
     
     protected override void OnModelCreating(ModelBuilder mb){
         mb.Entity<Account>().HasKey(c => c.Id);
@@ -25,8 +28,10 @@ public class AppDbContext : DbContext {
         mb.Entity<User>().Property(c => c.Title).HasMaxLength(30);
         mb.Entity<User>().Property(c => c.Subtitle).HasMaxLength(100);
         mb.Entity<User>().Property(c => c.Description).HasMaxLength(500);
-        mb.Entity<User>().HasOne(c => c.Layout).WithOne().HasForeignKey<Layout>(u => u.UserId).IsRequired(); // It creates at the Layout table a FK referencing the User.Id
-        mb.Entity<User>().HasOne(c => c.Links).WithOne().HasForeignKey<ProfileLinks>(u => u.UserId).IsRequired();
+        mb.Entity<User>().HasOne(c => c.Layout).WithOne().HasForeignKey<Layout>(u => u.UserId).IsRequired(); 
+        mb.Entity<User>().HasMany(c => c.Links).WithOne().HasForeignKey(u => u.UserId).IsRequired();
+        mb.Entity<User>().HasMany(c => c.Interests).WithOne().HasForeignKey(u => u.UserId).IsRequired();
+        mb.Entity<User>().HasMany(c => c.Questions).WithOne().HasForeignKey(u => u.UserId).IsRequired();        
 
         mb.Entity<Layout>().HasKey(c => c.Id);
         mb.Entity<Layout>().Property(c => c.BorderRadius).HasMaxLength(10);
@@ -38,16 +43,18 @@ public class AppDbContext : DbContext {
         mb.Entity<Layout>().Property(c => c.BaseLayout).HasMaxLength(40);
 
         mb.Entity<ProfileLinks>().HasKey(c => c.Id);
-        mb.Entity<ProfileLinks>().Property(c => c.Github).HasMaxLength(40);
-        mb.Entity<ProfileLinks>().Property(c => c.Instagram).HasMaxLength(40);
-        mb.Entity<ProfileLinks>().Property(c => c.Twitter).HasMaxLength(40);
-        mb.Entity<ProfileLinks>().Property(c => c.LastFm).HasMaxLength(40);
-        mb.Entity<ProfileLinks>().Property(c => c.Spotify).HasMaxLength(40);
-        mb.Entity<ProfileLinks>().Property(c => c.Letteboxd).HasMaxLength(40);
+        mb.Entity<ProfileLinks>().Property(c => c.Type).HasMaxLength(40);
+        mb.Entity<ProfileLinks>().Property(c => c.Value).HasMaxLength(40);
 
+        mb.Entity<Interests>().HasKey(c => c.Id);
+        mb.Entity<Interests>().Property(c => c.Interest).HasMaxLength(10);
+        mb.Entity<Interests>().Property(c => c.Emoji).HasMaxLength(5);
+        
+        mb.Entity<Questions>().HasKey(c => c.Id);
+        mb.Entity<Questions>().Property(c => c.Question).HasMaxLength(300);
+        mb.Entity<Questions>().Property(c => c.Answer).HasMaxLength(300);
+        
     }
-    public DbSet<Profile.Models.Account> Account { get; set; } = default!;
-
 
 }
 
