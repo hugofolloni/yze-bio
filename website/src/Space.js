@@ -16,14 +16,14 @@ const Curtain = () => {
     }, [])
 
     return ( 
-        <div className='curtain-div'>
-            <div className='star-wrapper'>
+        <div className='background-wrapper'>
+            <div className="star-wrapper">
                 {stars && stars.map((item) => (
-                    <div className='curtain-star' style={{  marginLeft: item.x + 'px',  marginTop: item.y + "px",  width: item.size,  height: item.size }} />
+                    <div className='star' style={{  marginLeft: item.x + 'px',  marginTop: item.y + "px",  width: item.size,  height: item.size }} />
                 ))}
             </div>
-            <div className='curtain-rocket-div'>
-                <img alt='Curtain rocket' className="curtain-rocket" src="https://images.emojiterra.com/google/noto-emoji/unicode-15.1/color/svg/1f680.svg" />
+            <div className='rocket-div'>
+                <img alt='Background rocket' className='background-rocket' src="https://images.emojiterra.com/google/noto-emoji/unicode-15.1/color/svg/1f680.svg" />
             </div>
         </div>
      );

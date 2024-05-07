@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import sha1 from "sha1";
+import Space from "./Space";
 
 const Register = () => {
 
@@ -7,7 +8,6 @@ const Register = () => {
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
 
-    const [error, setError] = useState(false)
     const [errorMessage, setErrorMessage] = useState("")
 
     const saveAccount = () => {
@@ -29,37 +29,49 @@ const Register = () => {
     }
 
     const handleRegister = () => {
-        setError(false)
         if(username === "" || email === "" || password === ""){
-            setErrorMessage("You have to fill all fields!")
-            return setError(true)
+            return setErrorMessage("All fields are required to proceed!")
         }     
         if(!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(email)){
-            setErrorMessage("You have to set a valid email!")
-            return setError(true)
+            return setErrorMessage("You have to set a valid email!")
         }
         fetch(`https://localhost:7041/api/Exists/${username},${email}`)
         .then(res => res.json())
         .then(exists => {
             console.log(exists)
             if(exists){
-                setErrorMessage("This username or email already exists!")
-                setError(true)
+                return setErrorMessage("This username or email already exists!")
             }
             else {
-                saveAccount()
+                return saveAccount()
             }
         });
     }
 
     return ( 
         <div className="register-wrapper">
+            <Space />
             <div className="register">
-                <input required type="text" value={username} onChange={(e) => setUsername(e.target.value)}/>
-                <input required type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-                <input required type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-                <button onClick={() => handleRegister()}>Register</button>
-                { error && <span style={{color: 'red'}}>{errorMessage}</span>}
+                <span className='form-title'>Create your account</span>
+                <div className="input-fields-wrapper">
+                    <span>Username</span>
+                    <input required type="text" placeholder='Your account username' value={username} onChange={(e) => setUsername(e.target.value)}/>
+                </div>
+                <div className="input-fields-wrapper">
+                    <span>Email</span>
+                    <input required type="email" placeholder='Your best email' value={email} onChange={(e) => setEmail(e.target.value)}/>
+                </div>
+                <div className="input-fields-wrapper">
+                    <span>Password</span>
+                    <input required type="password" placeholder='Your password' value={password} onChange={(e) => setPassword(e.target.value)}/>
+                </div>
+                <div className="button-error-div">
+                    <button onClick={() => handleRegister()}>Register</button>
+                    <span className='error-form'>{errorMessage}</span>
+                </div>
+            </div>
+            <div className="other-option-login">
+                <a href="/login">Already have an acount?</a>
             </div>
         </div>
      );

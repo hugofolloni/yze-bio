@@ -34,11 +34,9 @@ const Card = () => {
         fetch(`https://localhost:7041/api/Nickname?nickname=${username}`)
         .then(res => res.json())
         .then(data => {
-            console.log(data.status)
             if(data.status !== 400 && data.status !== 404){
                 setPageBackgroundColor(data.layout.pageBackgroundColor)
                 setData(data);  
-                console.log(data)
             }   
             else{
                 console.log("NOT FOUND")
