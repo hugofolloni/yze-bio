@@ -1,4 +1,6 @@
+
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -67,6 +69,82 @@ namespace Server.Controllers
         {
             return _context.User.Any(u => u.Nickname == nickname);
         }
+
+               // POST: api/User
+        [HttpPost("/api/WithPhoto")]
+        public async Task<ActionResult<User>> PostUser(IFormFile profileImage, User user)
+        {
+            if (profileImage == null || profileImage.Length == 0)
+            {
+                return BadRequest("No image selected");
+            }
+
+            if (!ValidateImage(profileImage)) 
+            {
+                return BadRequest("Invalid image format");
+            }
+
+            string imageUrl = await StoreProfileImage(profileImage); 
+            user.Photo = imageUrl;
+
+            _context.User.Add(user);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+        }
+
+        private bool ValidateImage(IFormFile profileImage)
+        {
+            string[] validExtensions = { ".jpg", ".jpeg", ".png", ".gif" }; 
+            return validExtensions.Contains(Path.GetExtension(profileImage.FileName).ToLower());
+        }
+
+        private async Task<string> StoreProfileImage(IFormFile profileImage)
+        {
+
+            string uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+            if (!Directory.Exists(uploadsPath))
+            {
+                Directory.CreateDirectory(uploadsPath);
+            }
+
+            string fileName = Guid.NewGuid().ToString() + Path.GetExtension(profileImage.FileName);
+            string filePath = Path.Combine(uploadsPath, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await profileImage.CopyToAsync(stream);
+            }
+
+            return $"/uploads/{fileName}";
+        }
+
+
+        public async Task DeleteUserPhoto(string photoUrl)
+        {           
+            if (string.IsNullOrEmpty(photoUrl))
+            {
+                return; // User has no photo to delete
+            }
+
+            // Extract filename from photo URL (assuming format "/uploads/fileName.jpg")
+            string fileName = Path.GetFileName(photoUrl.TrimStart('/'));
+
+            string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", fileName);
+
+            if (System.IO.File.Exists(filePath))
+            {
+                try
+                {
+                    await Task.Run(() =>  System.IO.File.Delete(filePath));
+                }
+                catch (Exception ex)
+                {
+                    // Handle potential exceptions during file deletion (e.g., log the error)
+                    throw new Exception($"Error deleting user photo: {ex.Message}");
+                }
+            }
+        }
     
 
         [HttpPatch("{nickname}")]
@@ -79,7 +157,6 @@ namespace Server.Controllers
                     return BadRequest("Nickname in URL does not match the nickname in the request body.");
                 }
 
-                // Find the user by nickname
                 var existingUser = await _context.User
                     .Include(u => u.Layout)
                     .Include(u => u.Links)
@@ -91,10 +168,8 @@ namespace Server.Controllers
                     return NotFound("User not found.");
                 }
 
-                // Update only the properties that are present in the request body
                 foreach (var property in user.GetType().GetProperties())
                 {
-                    // Exclude the 'Id' property
                     if (property.Name != "Id")
                     {
                         var newValue = property.GetValue(user);
@@ -120,5 +195,53 @@ namespace Server.Controllers
         }
 
 
+        [HttpPatch("/api/Photo/{nickname}")]
+        public async Task<IActionResult> PatchUser(string nickname, [FromForm] IFormFile profileImage)
+        {
+            if (profileImage == null || profileImage.Length == 0)
+            {
+                return BadRequest("No image selected");
+            }
+
+            if (!ValidateImage(profileImage)) 
+            {
+                return BadRequest("Invalid image format");
+            }
+
+            try
+            {
+                var existingUser = await _context.User
+                    .FirstOrDefaultAsync(u => u.Nickname == nickname);
+
+                if (existingUser == null)
+                {
+                    return NotFound("User not found.");
+                }
+
+
+                string oldPhoto = existingUser.Photo;
+                
+                string imageUrl = await StoreProfileImage(profileImage); 
+                existingUser.Photo = imageUrl;
+                
+                if(oldPhoto != "" && oldPhoto != null){
+                    await DeleteUserPhoto(oldPhoto);
+                }
+
+
+                _context.Update(existingUser);
+                await _context.SaveChangesAsync();
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while processing the request. Details: " + ex.Message);
+            }
+        }
+
+
     }
+
+    
 }
