@@ -7,11 +7,26 @@ const Homepage = () => {
     return ( 
         <div className="homepage-wrapper">
             <Space />
+            <HomepageHeader/>
             <HeroSection />
         </div>
      );
 }
  
+const HomepageHeader = () => {
+    return (
+        <div className="header-wrapper">
+            <div className="header">
+            <div className="nav">
+                <span onClick={() => {window.scrollTo(0, 0)}}>yze.bio</span>
+            </div>
+            <div className="search-bar-div">
+                
+            </div>
+            </div>
+        </div>
+    )
+}
 const HeroSection = () => {
     return ( 
         <div className="homepage-wrapper">

@@ -1,5 +1,6 @@
 import { useState } from "react"
 import sha1 from "sha1";
+import Space from "./Space";
 
 const Login = () => {
     const [username, setUsername] = useState("")
@@ -30,6 +31,7 @@ const Login = () => {
 
     return ( 
         <div className="login-wrapper">
+            <Space />
             <div className="login">
                 <span className='form-title'>Sign in</span>
                 <div className="input-fields-wrapper">
@@ -46,7 +48,7 @@ const Login = () => {
                 </div>
             </div>
             <div className="other-option-login">
-                <a href="/login">Don't have an acount?</a>
+                <a href="/register">Don't have an acount?</a>
             </div>
         </div>
      );
