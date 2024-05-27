@@ -21,13 +21,6 @@ namespace Server.Controllers
             _context = context;
         }
 
-        // GET: api/Account
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Account>>> GetAccount()
-        {
-            return await _context.Account.ToListAsync();
-        }
-
         // GET: api/Account/5
         [HttpGet("/api/Projects/{username}")]
         public async Task<ActionResult<Account>> GetAccount(string username)
@@ -111,10 +104,12 @@ namespace Server.Controllers
         }
 
         // DELETE: api/Account/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAccount(long id)
+        [HttpDelete("{username}")]
+        public async Task<IActionResult> DeleteAccount(string username)
         {
-            var account = await _context.Account.FindAsync(id);
+
+            var account = _context.Account.Where(c => c.Username == username).FirstOrDefault();
+
             if (account == null)
             {
                 return NotFound();

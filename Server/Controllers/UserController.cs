@@ -35,15 +35,9 @@ namespace Server.Controllers
         [HttpGet("/api/Nickname")]
         public ActionResult GetUser([FromQuery] string nickname)
         {
-            var result = from user in _context.User
-                            join layout in _context.Layout on user.Id equals layout.UserId
-                            join profilelinks in _context.ProfileLinks on user.Id equals profilelinks.UserId
-                            join interests in _context.Interests on user.Id equals interests.UserId
-                            where user.Nickname == nickname
-                            select new
-                            {
-                               user, layout, profilelinks, interests // Include the associated layout
-                            };
+
+
+            var result = _context.User.Include(x => x.Layout).Include(x => x.Links).Include(x => x.Interests).Where(x => x.Nickname == nickname).ToList();
 
             var userWithLayout = result.FirstOrDefault();
 
@@ -52,7 +46,7 @@ namespace Server.Controllers
                 return NotFound();
             }
 
-            return Ok(userWithLayout.user);
+            return Ok(userWithLayout);
         }
 
         // POST: api/User
@@ -120,7 +114,7 @@ namespace Server.Controllers
         }
 
 
-        public async Task DeleteUserPhoto(string photoUrl)
+        private async Task DeleteUserPhoto(string photoUrl)
         {           
             if (string.IsNullOrEmpty(photoUrl))
             {
