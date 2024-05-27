@@ -504,3 +504,55 @@ a {
   cursor: pointer;
   text-decoration: none;
 }
+
+.search-bar-div {
+  width: 40%;
+  height: 50px;
+}
+
+.search-bar-div input {
+  width: 100%;
+  height: 36px;
+  margin-top: 10px;
+  background-color: rgba(33, 17, 54, 0.0); 
+  border-radius: none;
+  padding: 10px;
+  border-radius: 2px;
+  border: none;
+  border-bottom: 1px solid #ffffff;
+  color: #b8b8b8;
+  position: relative;
+  outline: none;
+}
+
+.header-about {
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-about a {
+  font-weight: 600;
+  background-color: #5c5bec;
+  padding: 6px 15px;
+  border-radius: 4px;
+  margin-top: 3px;
+  border: 2px #5c5bec solid;
+  transition: 0.3s ease all;
+}
+
+.header-about a:hover {
+  background-color: #ffffff;
+  color: #5c5bec
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 15px;
+}
+
+.footer span, .footer a {
+  color: #666666;
+}

@@ -1,79 +1,65 @@
-import { useState } from "react";
-import {Cloudinary} from "@cloudinary/url-gen";
+import React, { useState } from 'react';
+import axios from 'axios';
 
 const Create = () => {
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [nickname, setNickname] = useState('');
+  const [uploadMessage, setUploadMessage] = useState('');
 
-    const [nickname, setNickame] = useState("")
-    const [photo, setPhoto] = useState("")
-    const [title, setTitle] = useState("")
-    const [subtitle, setSubtitle] = useState("")
-    const [description, setDescription] = useState("")
-    const [pronouns, setPronouns] = useState("")
-    const [song, setSong] = useState("")
-    const [gif, setGif] = useState("")
-    const [links, setLinks] = useState([])
-    const [interests, setInterests] = useState([])
-    const [layout, setLayout] = useState({    
-        "borderRadius": "12",
-        "cardBackgroundColor": "#0D0024",
-        "pageBackgroundColor": "#090015",
-        "fontFamily": "sans-serif",
-        "fontColor": "#ffffff",
-        "titleColor": "#ff5f00",
-        "baseLayout": "Omen"
-    })    
+  const handleImageChange = (event) => {
+    setSelectedImage(event.target.files[0]);
+  };
 
-    const [picture, setPicture] = useState({});
+  const handleNicknameChange = (event) => {
+    setNickname(event.target.value);
+  };
 
-  const uploadPicture = (e) => {
-    this.setState({
-        /* contains the preview, if you want to show the picture to the user
-           you can access it with this.state.currentPicture
-       */
-        picturePreview : URL.createObjectURL(e.target.files[0]),
-        /* this contains the file we want to send */
-        pictureAsFile : e.target.files[0]
-    })
-};
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-  const setImageAction = async () => {
-    const formData = new FormData();
-    formData.append(
-        "file",
-        this.state.pictureAsFile
-    );
-
-    console.log(picture.pictureAsFile);
-
-    for (var key of formData.entries()) {
-      console.log(key[0] + ", " + key[1]);
+    if (!selectedImage) {
+      setUploadMessage('Please select an image');
+      return;
     }
 
-    const data = await fetch("http://localhost:3000/upload/post", {
-      method: "post",
-      headers: { "Content-Type": "multipart/form-data" },
-      body: formData,
-    });
-    const uploadedImage = await data.json();
-    if (uploadedImage) {
-      console.log("Successfully uploaded image");
-    } else {
-      console.log("Error Found");
+    if (!nickname) {
+      setUploadMessage('Please enter your nickname');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('nickname', nickname); // Add nickname to FormData
+    formData.append('profileImage', selectedImage);
+
+    try {
+      const response = await axios.patch(`https://localhost:7041/api/Photo/${nickname}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // Set content type for FormData
+        },
+      });
+
+      setUploadMessage('Profile photo uploaded successfully!');
+      setSelectedImage(null);
+    } catch (error) {
+      console.error(error);
+      setUploadMessage('An error occurred during upload. Please try again.');
     }
   };
 
   return (
-    <div className="content landing">
-      <form onSubmit={setImageAction}>
-      <input type="file" name="image" onChange={this.uploadPicture}/>
-              <br />
-        <br />
-        <button type="submit" name="upload">
-          Upload
-        </button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="profileImage">Profile Photo:</label>
+        <input type="file" id="profileImage" name="profileImage" onChange={handleImageChange} />
+      </div>
+      <div>
+        <label htmlFor="nickname">Nickname:</label>
+        <input type="text" id="nickname" name="nickname" value={nickname} onChange={handleNicknameChange} />
+      </div>
+      <button type="submit">Update Profile</button>
+      {uploadMessage && <p>{uploadMessage}</p>}
+    </form>
   );
 };
- 
+
 export default Create;

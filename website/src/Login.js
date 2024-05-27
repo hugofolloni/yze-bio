@@ -46,6 +46,7 @@ const Login = () => {
                     <button onClick={() => tryLogin()}>Sign in</button>
                     <span className='error-form'>{errorMessage}</span>            
                 </div>
+                <a href="/reset">Forgot your password?</a>
             </div>
             <div className="other-option-login">
                 <a href="/register">Don't have an acount?</a>

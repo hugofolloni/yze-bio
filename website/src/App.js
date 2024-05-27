@@ -6,6 +6,7 @@ import Register from "./Register";
 import Login from "./Login";
 import Manage from "./Manage";
 import Create from "./Create";
+import Reset from "./Reset";
 
 function App() {
     return (
@@ -17,6 +18,7 @@ function App() {
                 <Route exact path="/manage" element={<Manage />} />
                 <Route exact path="/register" element={<Register />} />
                 <Route exact path="/create" element={<Create />} />
+                <Route exact path="/reset" element={<Reset />} />
                 <Route path="*" element={<Card />} />
           </Routes> 
         </div>

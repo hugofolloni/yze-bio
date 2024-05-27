@@ -59,6 +59,9 @@ const Card = () => {
                     <span style={{color:'#1c1c1c'}}>Sorry, this card does not exist. You can create this page right <a href="/create">here.</a></span>
                 </div>
             }
+            <div className="footer">
+                <span>Created with <a href="/">yze.bio</a></span>
+            </div>
         </Wrapper>
      );
 }

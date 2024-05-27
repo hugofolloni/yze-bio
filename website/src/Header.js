@@ -1,17 +1,25 @@
+import { useState } from 'react';
+
 const Header = () => {
-    return ( 
-        <div className="header-wrapper">
-        <div className="header">
-          <div className="nav">
-            <span onClick={() => {window.scrollTo(0, 0)}}>hugofolloni</span>
-          </div>
-          <div className="search-bar-div">
-            
-          </div>
+
+  const [search, setSearch] = useState("");
+
+  return ( 
+      <div className="header-wrapper">
+      <div className="header">
+        <div className="nav">
+          <span onClick={() => {window.scrollTo(0, 0)}}>yze.bio</span>
+        </div>
+        <div className="search-bar-div">
+          <input type="text" value={search} placeholder='Search for a bio' onChange={(e) => setSearch(e.target.value)} onKeyDown={(e) => { if(e.key === "Enter"){ window.location.href=`/${search}` }}}/>
+        </div>
+        <div className='header-about'>
+          <a href="#about">About</a>
         </div>
       </div>
+    </div>
 
-    );
+  );
 }
  
  
