@@ -35,7 +35,7 @@ namespace Server.Controllers
             return Ok(result);
         }
 
-        [HttpGet("/api/Login/{username}")]
+        [HttpGet("/api/Login/{username}", Name = "Login")]
         public ActionResult GetAccountByUsername(string username)
         {
             var result = from account in _context.Account
@@ -90,6 +90,13 @@ namespace Server.Controllers
             }
 
             return NoContent();
+        }
+
+        // GET: api/Account
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Account>>> GetAccount()
+        {
+            return await _context.Account.ToListAsync();
         }
 
         // POST: api/Account
