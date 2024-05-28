@@ -36,11 +36,11 @@ const Login = () => {
                 <span className='form-title'>Sign in</span>
                 <div className="input-fields-wrapper">
                     <span>Username</span>
-                    <input className="login-input" placeholder="Username" type="text" value={ username } onChange={(e) => setUsername(e.target.value)} />
+                    <input className="login-input" placeholder="Username" type="text" value={ username } onChange={(e) => setUsername(e.target.value)} onKeyDown={(e) => { if(e.key === "Enter"){ tryLogin() }}}/>
                 </div>
                 <div className="input-fields-wrapper">
                     <span>Password</span>
-                    <input className="login-input" placeholder="Password" type="password" value={ password } onChange={(e) => setPassword(e.target.value)}/>
+                    <input className="login-input" placeholder="Password" type="password" value={ password } onChange={(e) => setPassword(e.target.value)} onKeyDown={(e) => { if(e.key === "Enter"){ tryLogin() }}}/>
                 </div>
                 <div className="button-error-div">
                     <button onClick={() => tryLogin()}>Sign in</button>
@@ -49,7 +49,7 @@ const Login = () => {
                 <a href="/reset">Forgot your password?</a>
             </div>
             <div className="other-option-login">
-                <a href="/register">Don't have an acount?</a>
+                <a href="/register">Don't have an account?</a>
             </div>
         </div>
      );

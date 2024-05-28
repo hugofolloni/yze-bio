@@ -264,7 +264,7 @@ a {
   margin-top: 20px;
 }
 
-.translucent-container a {
+.translucent-container .redirect-button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -276,9 +276,10 @@ a {
   background-color: var(--accent-color);
   margin-top: 20px;
   transition: 0.4s ease all;
+  cursor: pointer;
 }
 
-.translucent-container a:hover{
+.translucent-container .redirect-button:hover{
   transform: scale(1.1);
   background-color: #7070e9;
 }
@@ -555,4 +556,50 @@ a {
 
 .footer span, .footer a {
   color: #666666;
+}
+
+.manage-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+
+.projects-wrapper {
+  width: 1000px;
+  margin-top: 100px;
+}
+
+.projects-title {
+  font-size: 36px;
+  font-weight: 500;
+}
+
+.projects {
+  width:  1000px;
+  margin: 50px 0 10vh 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-column-gap: calc(100% / 3 - 800px / 3);
+  grid-row-gap: 50px; 
+  height: fit-content;
+
+}
+
+.preview-card {
+  width: 100%;
+  height: 200px;
+  border-radius: 10px;
+  background-color: #EBCEC6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.container {
+  width: 1000px;
+  background-color: white;
 }

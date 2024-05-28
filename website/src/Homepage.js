@@ -15,6 +15,16 @@ const Homepage = () => {
 }
 
 const HeroSection = () => {
+
+    const redirectTo = () => {
+        const username = localStorage.getItem("username")
+        const password = localStorage.getItem("password")
+
+        console.log(username)
+        if(username === null) return window.location.href = "/login"
+        else window.location.href = '/manage'
+    }
+
     return ( 
         <div className="homepage-wrapper">
             <Space />
@@ -24,10 +34,13 @@ const HeroSection = () => {
                         <span className="main-title-first">Express yourself</span>
                         <span className="main-title">on your own way</span>
                         <span className='main-subtitle'>Design your bio, add links, and let the anonymous questions begin!</span>
-                        <a href="/manage">Create your cards</a>
+                        <div className='redirect-button' onClick={() => redirectTo()}>Create your cards</div>
                     </div>
                     <Cards />
                 </div>
+            </div>
+            <div className="footer">
+                <span>${} <a href="/hugo">hugofolloni</a></span>
             </div>
         </div>
      );

@@ -36,13 +36,21 @@ const Manage = () => {
             <div className="logout">
                 <button onClick={() => handleLogout()}>Logout</button>
             </div>
-            {cards.length > 0 && cards.map(item => (
-                <div className="preview-card">
-                    <span className="nickname">/{item.nickname}</span>
-                    <span className="title">{item.title}</span>
-                    <a href={`/${item.nickname}`}>Go to</a>
+            <div className="projects-wrapper">
+                <div className="projects-bar">
+                    <span className="projects-title">Projects</span>
+                    <a href="/create">Create</a>
                 </div>
-            ))}
+                <div className="projects">
+                    {cards.length > 0 && cards.reverse().map(item => (
+                        <div className="preview-card">
+                            <span className="nickname">/{item.nickname}</span>
+                            <span className="title">{item.title}</span>
+                            <a href={`/${item.nickname}`}>Go to</a>
+                        </div>
+                    ))}
+                </div>
+            </div>
         </div>
      );
 }

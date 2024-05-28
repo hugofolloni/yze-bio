@@ -13,9 +13,6 @@ const Header = () => {
         <div className="search-bar-div">
           <input type="text" value={search} placeholder='Search for a bio' onChange={(e) => setSearch(e.target.value)} onKeyDown={(e) => { if(e.key === "Enter"){ window.location.href=`/${search}` }}}/>
         </div>
-        <div className='header-about'>
-          <a href="#about">About</a>
-        </div>
       </div>
     </div>
 

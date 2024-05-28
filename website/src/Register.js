@@ -11,7 +11,7 @@ const Register = () => {
     const [errorMessage, setErrorMessage] = useState("")
 
     const saveAccount = () => {
-        fetch(`https://localhost:7041/api/Exists/${username},${email}`, {
+        fetch(`https://localhost:7041/api/Account`, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -25,7 +25,11 @@ const Register = () => {
             } )  
         })
         .then(res => res.json())
-        .then()
+        .then(() => {
+            window.localStorage.setItem("username", username)
+            window.localStorage.setItem("password", sha1(password))
+            window.location.href = "/manage"
+        })
     }
 
     const handleRegister = () => {
@@ -35,7 +39,7 @@ const Register = () => {
         if(!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(email)){
             return setErrorMessage("You have to set a valid email!")
         }
-        fetch(`https://localhost:7041/api/Exists/${username},${email}`)
+        fetch(`https://localhost:7041/api/AccountExists/${username},${email}`)
         .then(res => res.json())
         .then(exists => {
             console.log(exists)
