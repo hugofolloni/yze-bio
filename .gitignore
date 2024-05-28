@@ -15,8 +15,9 @@
 [Oo]bj/
 [Oo]ut/
 *.json
+!launchSettings.json
 *.sln
-
+wwwroot/
 
 node_modules/
 .pnp/

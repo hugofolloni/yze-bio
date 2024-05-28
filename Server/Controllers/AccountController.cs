@@ -25,7 +25,7 @@ namespace Server.Controllers
         [HttpGet("/api/Projects/{username}")]
         public async Task<ActionResult<Account>> GetAccount(string username)
         {
-            var result = _context.Account.Where(c => c.Username == username).Include(c => c.Users);
+            var result = _context.Account.Where(c => c.Username == username).Include(c => c.Users).ThenInclude(u => u.Layout).FirstOrDefault();
 
             if (result == null)
             {

@@ -588,14 +588,30 @@ a {
 
 }
 
-.preview-card {
+.preview-card-background {
   width: 100%;
   height: 200px;
-  border-radius: 10px;
-  background-color: #EBCEC6;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  transition: 0.5s ease all;
+  cursor: pointer;
+}
+
+.preview-card-background:hover{
+  transform: scale(1.03) rotate(0.001turn);
+}
+
+.preview-card {
+  height: 100%;
+  width: 100%;
+  padding: 20px;
+  border-radius: 5px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-around;
 }
 

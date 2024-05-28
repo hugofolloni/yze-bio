@@ -14,7 +14,7 @@ const Manage = () => {
         fetch(`https://localhost:7041/api/Projects/${username}`)
         .then(res => res.json())
         .then(data => {
-            setCards(data[0].users);
+            setCards(data.users);
         })
 
     }, [])
@@ -43,10 +43,13 @@ const Manage = () => {
                 </div>
                 <div className="projects">
                     {cards.length > 0 && cards.reverse().map(item => (
-                        <div className="preview-card">
-                            <span className="nickname">/{item.nickname}</span>
-                            <span className="title">{item.title}</span>
-                            <a href={`/${item.nickname}`}>Go to</a>
+                        <div className="preview-card-background" onClick={() => window.location.href = `/${item.nickname}`} style={{backgroundColor: item.layout.pageBackgroundColor }}>
+                            <div className="preview-card" style={{backgroundColor: item.layout.cardBackgroundColor}}>
+                                <span className="title" style={{color: item.layout.titleColor, fontFamily: item.layout.fontFamily, fontSize: '32px', fontWeight: '700'}}>{item.title}</span>
+                                <span className="subtitle" style={{fontWeight: '600', color: item.fontColor, padding: '5px'}}>{item.subtitle}</span>
+                                <span className="subtitle" style={{fontWeight: '500', color: item.fontColor, padding: '5px'}}>{item.layout.baseLayout}</span>
+                                <span className="nickname" style={{fontWeight: '500', color: item.fontColor, padding: '5px'}}>yze.bio/{item.nickname}</span>
+                            </div>
                         </div>
                     ))}
                 </div>
