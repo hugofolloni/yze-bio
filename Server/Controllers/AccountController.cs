@@ -55,7 +55,7 @@ namespace Server.Controllers
             return Ok(userWithLayout);
         }
 
-        [HttpGet("/api/Exists/{username},{email}")]
+        [HttpGet("/api/AccountExists/{username},{email}")]
         public bool UserExists(string username, string email)
         {
             return _context.Account.Any(u => u.Username == username) || _context.Account.Any(u => u.Email == email);

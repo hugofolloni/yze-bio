@@ -235,7 +235,11 @@ namespace Server.Controllers
         }
 
 
+        [HttpGet("/api/UserExists/nickname")]
+        public bool UserExists(string username, string email)
+        {
+            return _context.User.Any(u => u.Nickname == username);
+        }
     }
 
-    
 }
