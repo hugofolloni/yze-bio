@@ -1042,3 +1042,30 @@ a {
   transform: scale(1.1);
 }
 
+.projects-bar {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.projects-bar span {
+  font-weight: 700;
+}
+
+.projects-bar a {
+  background-color: #7070e9;
+  padding: 12px;
+  border-radius: 5px;
+  color: #ffffff;
+  border: 2px solid #7070e9;
+  transition: 0.3s ease all;
+}
+
+.projects-bar a:hover {
+  color: #7070e9;
+  background-color: #ffffff;
+  transform: scale(1.05) rotate(0.005turn);;
+}
+

@@ -38,6 +38,7 @@ const PalettePreview = styled.div`
 const CreateButton = styled.div`
   background-color: ${props => props.palette[2]};
   border: 2px solid ${props => props.palette[2]};
+  color: ${props => props.palette[1]};
   &:hover {
     background-color: ${props => props.palette[1]};
     color: ${props => props.palette[2]};
@@ -47,6 +48,7 @@ const CreateButton = styled.div`
 const Create = () => {
 
   useEffect(() => {
+    document.title = "Creating card" ;
     const username = window.localStorage.getItem("username")
     fetch(`https://localhost:7041/api/Account/GetId/${username}`)
     .then(res => res.json())
@@ -87,6 +89,12 @@ const Create = () => {
   const [alert, setAlert] = useState(false)
   const [alertText, setAlertText] = useState('')
 
+  const [gifPicker, setGifPicker] = useState(false);
+  const [gifText, setGifText] = useState("")
+
+  const [songPicker, setSongPicker] = useState(false);
+  const [songText, setSongText] = useState("");
+
   const handlePalettePicking = (item) => {
     setPalette([item.pageBackgroundColor, item.cardBackgroundColor, item.titleColor, item.fontColor])
     setPaletteShowcase(false)
@@ -103,6 +111,15 @@ const Create = () => {
       setAlertText("The title can't be empty.")  
       return setAlert(true)
     }
+
+    
+    if(subtitle === "Subtitle"){
+      setSubtitle("");
+    }
+    if(description === "Description"){
+      setDescription("");
+    }
+
 
     fetch(`https://localhost:7041/api/UserExists/${nickname}`)
     .then(res => res.json())
@@ -156,6 +173,9 @@ const Create = () => {
         .then(() => window.location.href = `/${nickname}`)
   }
 
+
+
+
   return (  
     <div className="card-wrapper" style={{backgroundColor: palette[0]}}>
 
@@ -199,7 +219,7 @@ const Create = () => {
                         <img src={`https://i.giphy.com/${gif}.webp`} style={{width: '200px', marginTop: '20px', maxHeight: '300px'}} alt='gif'/>
                     ))
                     ||
-                    <Placeholders palette={palette} className='gif-placeholder'><span>GIF</span><Add fontSize="large" className='icon'/></Placeholders>
+                    <Placeholders onClick={() => setGifPicker(true)} palette={palette} className='gif-placeholder'><span>GIF</span><Add fontSize="large" className='icon'/></Placeholders>
                 }
             </div>
 
@@ -209,7 +229,7 @@ const Create = () => {
                         <iframe title='spotify' className="song-iframe" src={`https://open.spotify.com/embed/track/${song}?utm_source=generator&theme=0`}  allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" />
                     ))
                     ||
-                    <Placeholders palette={palette} className='song-placeholder'><span>Spotify Song</span><Add fontSize="large" className='icon'/></Placeholders>
+                    <Placeholders onClick={() => setSongPicker(true)} palette={palette} className='song-placeholder'><span>Spotify Song</span><Add fontSize="large" className='icon'/></Placeholders>
                 }
             </div>
 
@@ -282,8 +302,25 @@ const Create = () => {
         </div>
       )}
 
-      { (interestChooser || paletteShowcase || addingLink || alert) && (
-        <div className="translucent-background" onClick={() => {setInterestChooser(false); setPaletteShowcase(false); setAddingLink(false); setAlert(false)}}/>
+
+      { songPicker && (
+          <div className="alert-box" style={{backgroundColor: palette[3]}}>
+            <input style={{color: palette[0]}} type="text" placeholder="Song ID" value={songText} onChange={(e) => setSongText(e.target.value)} />
+            <button style={{backgroundColor: palette[2]}} onClick={() => {setSong(songText); setSongPicker(false);} }>Here it is</button>
+          </div>
+      )}
+
+      
+    { gifPicker && (
+          <div className="alert-box" style={{backgroundColor: palette[3]}}>
+            <input style={{color: palette[0]}} type="text" placeholder="GIF ID" value={gifText} onChange={(e) => setGifText(e.target.value)} />
+            <button style={{backgroundColor: palette[2]}} onClick={() => {setGif(gifText); setGifPicker(false);} }>Here it is</button>
+          </div>
+      )}
+
+
+      { (interestChooser || paletteShowcase || addingLink || alert || songPicker || gifPicker) && (
+        <div className="translucent-background" onClick={() => {setInterestChooser(false); setPaletteShowcase(false); setAddingLink(false); setAlert(false); setSongPicker(false); setGifPicker(false);}}/>
       )}
 
     </div>
