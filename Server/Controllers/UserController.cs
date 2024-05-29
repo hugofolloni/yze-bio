@@ -59,10 +59,6 @@ namespace Server.Controllers
 
             return CreatedAtAction("GetUser", new { id = user.Id }, user);
         }
-        private bool UserExists(string nickname)
-        {
-            return _context.User.Any(u => u.Nickname == nickname);
-        }
 
                // POST: api/User
         [HttpPost("/api/WithPhoto")]
@@ -235,11 +231,29 @@ namespace Server.Controllers
         }
 
 
-        [HttpGet("/api/UserExists/nickname")]
-        public bool UserExists(string username, string email)
+        [HttpGet("/api/UserExists/{nickname}")]
+        public bool UserExists(string nickname)
         {
-            return _context.User.Any(u => u.Nickname == username);
+            return _context.User.Any(u => u.Nickname == nickname);
         }
+
+        [HttpDelete("{nickname}")]
+        public async Task<IActionResult> DeleteAccount(string nickname)
+        {
+
+            var user = _context.User.Where(c => c.Nickname == nickname).FirstOrDefault();
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            _context.User.Remove(user);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+        
     }
 
 }

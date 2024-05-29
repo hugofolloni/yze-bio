@@ -128,6 +128,19 @@ namespace Server.Controllers
             return NoContent();
         }
 
+        [HttpGet("/api/Account/GetId/{username}")]
+        public async Task<ActionResult<long>> GetId(string username)
+        {
+            var result = _context.Account.Where(c => c.Username == username).FirstOrDefault();
+            
+            if (result == null)
+            {
+                return -1;
+            }
+
+            return result.Id;
+        }
+
         private bool AccountExists(long id)
         {
             return _context.Account.Any(e => e.Id == id);
