@@ -68,13 +68,13 @@ const Basic = (props) => {
             </div>
 
             <div style={{ position: 'absolute', top: 0, right: 0, marginRight: '30px'}}>
-                { props.data.gif !== null && (
+                { props.data.gif !== "" && (
                     <img className='gif-img' src={`https://i.giphy.com/${props.data.gif}.webp`} alt='gif'/>
                 )}
             </div>
 
             <div style={{ position: 'absolute', bottom: 0, left: 0, marginLeft: '15px', marginBottom: '10px' }}>                
-                { props.data.song !== null && (
+                { props.data.song !== "" && (
                         <iframe title='spotify' className="song-iframe" src={`https://open.spotify.com/embed/track/${props.data.song}?utm_source=generator&theme=0`}  allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" />
                     )}
             </div>

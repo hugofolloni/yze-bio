@@ -24,10 +24,10 @@ public class AppDbContext : DbContext {
         mb.Entity<Account>().HasMany(c => c.Users).WithOne().HasForeignKey(c => c.AccountId);
 
         mb.Entity<User>().HasKey(c => c.Id);
-        mb.Entity<User>().Property(c => c.Nickname).HasMaxLength(30);
-        mb.Entity<User>().Property(c => c.Title).HasMaxLength(30);
-        mb.Entity<User>().Property(c => c.Subtitle).HasMaxLength(100);
-        mb.Entity<User>().Property(c => c.Description).HasMaxLength(500);
+        mb.Entity<User>().Property(c => c.Nickname).HasMaxLength(40);
+        mb.Entity<User>().Property(c => c.Title).HasMaxLength(20);
+        mb.Entity<User>().Property(c => c.Subtitle).HasMaxLength(50);
+        mb.Entity<User>().Property(c => c.Description).HasMaxLength(300);
         mb.Entity<User>().HasOne(c => c.Layout).WithOne().HasForeignKey<Layout>(u => u.UserId).IsRequired(); 
         mb.Entity<User>().HasMany(c => c.Links).WithOne().HasForeignKey(u => u.UserId).IsRequired();
         mb.Entity<User>().HasMany(c => c.Interests).WithOne().HasForeignKey(u => u.UserId).IsRequired();
@@ -44,15 +44,15 @@ public class AppDbContext : DbContext {
 
         mb.Entity<ProfileLinks>().HasKey(c => c.Id);
         mb.Entity<ProfileLinks>().Property(c => c.Type).HasMaxLength(40);
-        mb.Entity<ProfileLinks>().Property(c => c.Value).HasMaxLength(40);
+        mb.Entity<ProfileLinks>().Property(c => c.Value).HasMaxLength(100);
 
         mb.Entity<Interests>().HasKey(c => c.Id);
-        mb.Entity<Interests>().Property(c => c.Interest).HasMaxLength(10);
+        mb.Entity<Interests>().Property(c => c.Interest).HasMaxLength(30);
         mb.Entity<Interests>().Property(c => c.Emoji).HasMaxLength(5);
         
         mb.Entity<Questions>().HasKey(c => c.Id);
-        mb.Entity<Questions>().Property(c => c.Question).HasMaxLength(300);
-        mb.Entity<Questions>().Property(c => c.Answer).HasMaxLength(300);
+        mb.Entity<Questions>().Property(c => c.Question).HasMaxLength(400);
+        mb.Entity<Questions>().Property(c => c.Answer).HasMaxLength(490);
         
     }
 
