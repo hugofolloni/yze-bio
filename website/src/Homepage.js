@@ -1,8 +1,8 @@
 import Space from "./Space";
-import GitHubIcon from '@mui/icons-material/GitHub';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import XIcon from '@mui/icons-material/X';
 import Header from "./Header";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faInstagram, faGithub, faXTwitter } from "@fortawesome/free-brands-svg-icons"
+
 
 const Homepage = () => {
     return ( 
@@ -40,7 +40,7 @@ const HeroSection = () => {
                 </div>
             </div>
             <div className="footer">
-                <span>${} <a href="/hugo">hugofolloni</a></span>
+                <span> Created by <a href="/hugo">hugofolloni</a></span>
             </div>
         </div>
      );
@@ -57,9 +57,9 @@ const Cards = () => {
                 <span className="title">Your name</span>
                 <span className="subtitle">Tell the others about yourself. Be seen.</span>
                 <div className="links">
-                    <XIcon fontSize="large" className='icon'/>          
-                    <InstagramIcon fontSize="large" className='icon'/>          
-                    <GitHubIcon fontSize="large" className='icon'/>          
+                    <FontAwesomeIcon icon={faXTwitter}  size="2x" color="white"/>
+                    <FontAwesomeIcon icon={faInstagram}  size="2x" color="white" />
+                    <FontAwesomeIcon icon={faGithub}  size="2x" color="white" />
                 </div>
                 <div className="spotify-embed">
                     <iframe title='spotify' style={{borderRadius: "12px", border: 'none', height: '150px', width: '100%'}} src={`https://open.spotify.com/embed/track/${songs[Math.floor(Math.random() * songs.length)]}?utm_source=generator&theme=0`}  allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" />
@@ -70,9 +70,9 @@ const Cards = () => {
                 <span className="title">Hi, I'm...</span>
                 <iframe src={`https://giphy.com/embed/${gifs[Math.floor((Math.random() * gifs.length))]}`} width="220" height="130"  class="giphy-embed" allowFullScreen title='gif' style={{border: 'none', margin: '30px 0'}}/>
                 <div className="links">
-                    <XIcon fontSize="large" className='icon'/>          
-                    <GitHubIcon fontSize="large" className='icon'/>          
-                    <InstagramIcon fontSize="large" className='icon'/>          
+                    <FontAwesomeIcon icon={faXTwitter}  size="2x" color="white"/>
+                    <FontAwesomeIcon icon={faInstagram}  size="2x" color="white" />
+                    <FontAwesomeIcon icon={faGithub}  size="2x" color="white" />
                 </div>
               
             </div>

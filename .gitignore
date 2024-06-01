@@ -19,6 +19,8 @@
 *.sln
 wwwroot/
 
+.env
+
 node_modules/
 .pnp/
 *.pnp.js

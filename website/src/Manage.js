@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
+import Header from "./Header";
 
 const Manage = () => {
 
     const [cards, setCards] = useState([])
+    const [username, setUsername] = useState()
 
     useEffect(() => {
         const username = localStorage.getItem("username")
-        const password = localStorage.getItem("password")
+        setUsername(username)
 
-        console.log(username)
         if(username === null) return window.location.href = "/login"
 
         fetch(`https://localhost:7041/api/Projects/${username}`)
@@ -33,12 +34,14 @@ const Manage = () => {
 
     return ( 
         <div className="manage-wrapper">
-            <div className="logout">
+            <Header/>
+            <div className="welcome-div">
+                <h2>Welcome, {username}</h2>
                 <button onClick={() => handleLogout()}>Logout</button>
             </div>
             <div className="projects-wrapper">
                 <div className="projects-bar">
-                    <span className="projects-title">Projects</span>
+                    <span className="projects-title">Profiles</span>
                     <a href="/create">Create</a>
                 </div>
                 <div className="projects">

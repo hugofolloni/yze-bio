@@ -45,6 +45,8 @@ public class AppDbContext : DbContext {
         mb.Entity<ProfileLinks>().HasKey(c => c.Id);
         mb.Entity<ProfileLinks>().Property(c => c.Type).HasMaxLength(40);
         mb.Entity<ProfileLinks>().Property(c => c.Value).HasMaxLength(100);
+        mb.Entity<ProfileLinks>().Property(c => c.Action).HasMaxLength(20);
+
 
         mb.Entity<Interests>().HasKey(c => c.Id);
         mb.Entity<Interests>().Property(c => c.Interest).HasMaxLength(30);

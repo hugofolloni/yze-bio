@@ -8,7 +8,7 @@ const Header = () => {
       <div className="header-wrapper">
       <div className="header">
         <div className="nav">
-          <span onClick={() => {window.scrollTo(0, 0)}}>yze.bio</span>
+          <span onClick={() => {window.location.href = '/'}}>yze.bio</span>
         </div>
         <div className="search-bar-div">
           <input type="text" value={search} placeholder='Search for a bio' onChange={(e) => setSearch(e.target.value)} onKeyDown={(e) => { if(e.key === "Enter"){ window.location.href=`/${search}` }}}/>
