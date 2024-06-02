@@ -3,7 +3,7 @@ import { colors, hobbies, fonts, borders, availableLinks } from './assets'
 import styled from "styled-components"
 import Add from "@mui/icons-material/Add";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {Buffer} from 'buffer';
+import { Buffer } from 'buffer';
 import { faXTwitter, faGithub, faInstagram, faTiktok, faDiscord, faSquareLastfm, faSteam, faPinterest, faLetterboxd, faTwitch, faSpotify, faYoutube, faTumblr, faReddit } from '@fortawesome/free-brands-svg-icons';
 import { faX } from '@fortawesome/free-solid-svg-icons'
 
@@ -181,14 +181,13 @@ const Create = () => {
           if(data.status === 400){
             setAlertText("An error occurred.")  
             return setAlert(true)
-          
           }
         }
         )        
         .then(() => {if(!alert){window.location.href = `/${nickname}`}})
   }
 
-  async function getToken() {
+  const getToken = async () => {
     const response = await fetch('https://accounts.spotify.com/api/token', {
       method: 'POST',
       body: new URLSearchParams({
@@ -203,7 +202,7 @@ const Create = () => {
     return await response.json();
   }
 
-  async function getTrackInfo(access_token) {
+  const getTrackInfo = async (access_token) => {
     const response = await fetch(`https://api.spotify.com/v1/search?q=${songText}&type=track&market=US`, {
       method: 'GET',
       headers: { 'Authorization': 'Bearer ' + access_token },
