@@ -164,9 +164,11 @@ const Edit = () => {
     .then(res => res.json())
     .then(data => {
       if(data) {
-        setAlertText("This name is already taken!")  
-        setNickname("")
-        return setAlert(true)
+          if(nickname !== window.location.href.split("/")[4]){
+          setAlertText("This name is already taken!")  
+          setNickname("")
+          return setAlert(true)
+        }
       }
     })
 

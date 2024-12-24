@@ -455,7 +455,7 @@ const Create = () => {
     { gifPicker && (
        <div className="songs-showcase" style={{backgroundColor: palette[1]}}>
           <div className='links-input'>
-            <FocusInput palette={palette} className='link-url' onKeyDown={(e) => {if(e.key === "Enter"){searchGif()}}} style={{color: palette[3], backgroundColor: palette[1], borderBottomColor: palette[0]}} type="text"  placeholder="Song ID" value={gifText} onChange={(e) => setGifText(e.target.value)}/>
+            <FocusInput palette={palette} className='link-url' onKeyDown={(e) => {if(e.key === "Enter"){searchGif()}}} style={{color: palette[3], backgroundColor: palette[1], borderBottomColor: palette[0]}} type="text"  placeholder="Search a GIF" value={gifText} onChange={(e) => setGifText(e.target.value)}/>
             <CreateButton palette={palette} style={{marginTop: '10px'}} className="create-button" onClick={() => searchGif()}>Search</CreateButton>
           </div>
           <div className="songs-area">
