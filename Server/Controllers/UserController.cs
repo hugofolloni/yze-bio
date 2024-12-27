@@ -18,24 +18,39 @@ namespace Server.Controllers
     public class UserController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly string _ApiKey;
 
-        public UserController(AppDbContext context)
+        private bool IsValidApiKey(string key)
+        {
+            return key == _ApiKey;
+        }
+
+        public UserController(AppDbContext context, IConfiguration configuration)
         {
             _context = context;
+            _ApiKey = configuration["ApiSettings:ApiKey"];
         }
 
         // GET: api/User
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUser()
+        public async Task<ActionResult<IEnumerable<User>>> GetUser([FromQuery] string key)
         {
+            if (!IsValidApiKey(key))
+            {
+                return Unauthorized("Chave errada");
+            }
             return await _context.User.Include(x => x.Layout).Include(x => x.Links).ToListAsync();
         }
 
         
         [HttpGet("/api/Nickname")]
-        public ActionResult GetUser([FromQuery] string nickname)
+        public ActionResult GetUser([FromQuery] string nickname, [FromQuery] string key)
         {
 
+            if (!IsValidApiKey(key))
+            {
+                return Unauthorized("Chave errada");
+            }
 
             var result = _context.User.Include(x => x.Layout).Include(x => x.Links).Include(x => x.Interests).Where(x => x.Nickname == nickname).ToList();
 
@@ -52,8 +67,13 @@ namespace Server.Controllers
         // POST: api/User
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<User>> PostUser(User user, [FromQuery] string key)
         {
+            if (!IsValidApiKey(key))
+            {
+                return Unauthorized("Chave errada");
+            }
+
             _context.User.Add(user);
             await _context.SaveChangesAsync();
 
@@ -62,8 +82,13 @@ namespace Server.Controllers
 
                // POST: api/User
         [HttpPost("/api/WithPhoto")]
-        public async Task<ActionResult<User>> PostUser(IFormFile profileImage, User user)
+        public async Task<ActionResult<User>> PostUser(IFormFile profileImage, User user, [FromQuery] string key)
         {
+            if (!IsValidApiKey(key))
+            {
+                return Unauthorized("Chave errada");
+            }
+
             if (profileImage == null || profileImage.Length == 0)
             {
                 return BadRequest("No image selected");
@@ -138,8 +163,13 @@ namespace Server.Controllers
     
 
         [HttpPatch("{nickname}")]
-        public async Task<IActionResult> PatchUser(string nickname, [FromBody] User user)
+        public async Task<IActionResult> PatchUser(string nickname, User user, [FromQuery] string key)
         {
+            if (!IsValidApiKey(key))
+            {
+                return Unauthorized("Chave errada");
+            }
+
             try
             {
                 if (nickname != user?.Nickname)
@@ -176,7 +206,7 @@ namespace Server.Controllers
 
                 await _context.SaveChangesAsync();
 
-                return NoContent();
+                return Ok(existingUser);
             }
             catch (Exception ex)
             {
@@ -186,8 +216,13 @@ namespace Server.Controllers
 
 
         [HttpPatch("/api/Photo/{nickname}")]
-        public async Task<IActionResult> PatchUser(string nickname, [FromForm] IFormFile profileImage)
+        public async Task<IActionResult> PatchUser(string nickname, [FromForm] IFormFile profileImage, [FromQuery] string key)
         {
+            if (!IsValidApiKey(key))
+            {
+                return Unauthorized("Chave errada");
+            }
+
             if (profileImage == null || profileImage.Length == 0)
             {
                 return BadRequest("No image selected");
@@ -238,8 +273,12 @@ namespace Server.Controllers
         }
 
         [HttpDelete("{nickname}")]
-        public async Task<IActionResult> DeleteAccount(string nickname)
+        public async Task<IActionResult> DeleteAccount(string nickname, [FromQuery] string key)
         {
+            if (!IsValidApiKey(key))
+            {
+                return Unauthorized("Chave errada");
+            }
 
             var user = _context.User.Where(c => c.Nickname == nickname).FirstOrDefault();
 

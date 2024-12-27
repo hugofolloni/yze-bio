@@ -13,7 +13,7 @@ const Card = () => {
     const [pageBackgroundColor, setPageBackgroundColor] = useState("#eaeaea")
 
     useEffect(() => {
-        fetch(`https://localhost:7041/api/Nickname?nickname=${username}`)
+        fetch(`https://localhost:7041/api/Nickname?nickname=${username}&key=abc123`)
         .then(res => res.json())
         .then(data => {
             if(data.status !== 400 && data.status !== 404){

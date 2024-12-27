@@ -11,7 +11,7 @@ const Register = () => {
     const [errorMessage, setErrorMessage] = useState("")
 
     const saveAccount = () => {
-        fetch(`https://localhost:7041/api/Account`, {
+        fetch(`https://localhost:7041/api/Account?key=abc123`, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'

@@ -60,7 +60,7 @@ const Create = () => {
   useEffect(() => {
     document.title = "Creating card" ;
     const username = window.localStorage.getItem("username")
-    fetch(`https://localhost:7041/api/Account/GetId/${username}`)
+    fetch(`https://localhost:7041/api/Account/GetId/${username}&key=abc123`)
     .then(res => res.json())
     .then(data => {
       console.log(data)
@@ -136,9 +136,11 @@ const Create = () => {
     .then(res => res.json())
     .then(data => {
       if(data) {
-        setAlertText("This name is already taken!")  
-        setNickname("")
-        return setAlert(true)
+          if(nickname !== window.location.href.split("/")[4]){
+          setAlertText("This name is already taken!")  
+          setNickname("")
+          return setAlert(true)
+        }
       }
     })
 
@@ -167,7 +169,7 @@ const Create = () => {
 
     console.log(body)
 
-    fetch(`https://localhost:7041/api/User/`, {
+    fetch(`https://localhost:7041/api/User?key=abc123`, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -229,6 +231,60 @@ const Create = () => {
     fetch(url)
     .then(res => res.json())
     .then(data => setGifResults(data.data))
+  }
+
+  const socialLinks = {
+    twitter: "https://twitter.com/",
+    github: "https://github.com/",
+    instagram: "https://instagram.com/",
+    tiktok: "https://www.tiktok.com/@",
+    lastfm: "https://last.fm/user/",
+    pinterest: "https://www.pinterest.com/",
+    letterboxd: "https://letterboxd.com/",
+    twitch: "https://www.twitch.tv/",
+    spotify: "https://open.spotify.com/user/",
+    youtube: "https://www.youtube.com/user/",
+    tumblr: "https://",
+    reddit: "https://www.reddit.com/user/"
+};
+
+  const generateSocialLink = (type, username) => {
+    const baseUrl = socialLinks[type];
+    if (!baseUrl) {
+        console.error(`Unknown social media type: ${type}`);
+        return null;
+    }
+    return `${baseUrl}${username}`;
+}
+
+  const handleAddLink = () => {
+    var action = "redirect"
+    var link = newLinkUrl
+    if(searchLink.placeholder === "Tag"){
+      action = "clipboard"
+    }
+    console.log('infos:', link)
+    if(searchLink.placeholder === "URL" && newLinkUrl.indexOf("http") === -1){
+
+      link = generateSocialLink(searchLink.type, newLinkUrl)
+    }
+
+    if(editingIndex === -1) {
+      setLinks([...links, {type: searchLink.type, value: link, action: action}]); 
+      setAddingLink(false); 
+      setEditingIndex(-1)
+      console.log([...links, {type: searchLink.type, value: link, action: action}]);
+    }
+    else {
+      var currentLinks = links; 
+      currentLinks[editingIndex] = {type: searchLink.type, value: link, action: action}; 
+      setLinks(currentLinks);  
+      setEditingIndex(-1); 
+      setAddingLink(false);
+    }
+
+    console.log([...links, {type: searchLink.type, value: link, action: action}]);
+
   }
 
   return (  
@@ -521,24 +577,7 @@ const Create = () => {
               </div>
             </div>
             <FocusInput palette={palette} className='link-url' style={{color: palette[3], width: '300px', backgroundColor: palette[1], borderBottomColor: palette[0]}} type="text"  placeholder={searchLink.placeholder}  value={newLinkUrl} onChange={(e) => setNewLinkUrl(e.target.value)}/>
-            <CreateButton palette={palette} style={{marginTop: '10px'}} className="create-button" onClick={() => {
-              var action = "redirect"
-              console.log(searchLink)
-              var link = newLinkUrl
-              console.log(newLinkUrl, newLinkUrl.indexOf("http") === -1)
-              if(searchLink.placeholder === "Tag"){
-                action = "clipboard"
-              }
-              if(searchLink.placeholder === "URL" && newLinkUrl.indexOf("http") === -1){
-                link = "https://" + newLinkUrl
-              }
-              if(editingIndex === -1) {
-                setLinks([...links, {type: searchLink.type, value: link, action: action}]); setAddingLink(false); setEditingIndex(-1)
-              }
-              else {
-                var currentLinks = links; currentLinks[editingIndex] = {type: searchLink.type, value: link, action: action}; setLinks(currentLinks);  setEditingIndex(-1); setAddingLink(false);
-              }
-              }}>Add</CreateButton>
+            <CreateButton palette={palette} style={{marginTop: '10px'}} className="create-button" onClick={() => handleAddLink()}>Add</CreateButton>
           </div>
       </div>
     )}

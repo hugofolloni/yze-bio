@@ -610,41 +610,49 @@ a {
   margin: 50px 0 10vh 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 1fr);
   grid-column-gap: calc(100% / 3 - 800px / 3);
   grid-row-gap: 50px; 
   height: fit-content;
-
 }
 
 .preview-card-background {
   width: 300px;
-  height: 200px;
+  height: 270px;
   border-radius: 3px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
+  flex-direction: column;
   padding: 20px;
   overflow: hidden;
-  transition: 0.5s ease all;
-  cursor: pointer;
+  box-shadow: rgba(255, 255, 255, 0.15) 0px 1px 3px 0px, rgba(200, 200, 200, 0.15) 0px 0px 0px 1px;
 }
 
-.preview-card-background:hover{
-  transform: scale(1.03) rotate(0.001turn);
+.preview-card:hover{
+  transform: scale(1.03) rotate(0.000turn);
 }
 
 .preview-card {
-  height: 100%;
+  height: 70%;
   width: 100%;
   padding: 20px;
   border-radius: 5px;
   overflow: hidden;
-
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-around;
+  transition: 0.7s ease all;
+}
+
+.manage-card-buttons {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-around;
+  height: fit-content;
 }
 
 .container {
@@ -1162,11 +1170,11 @@ a {
   font-weight: 600;
 }
 
-.creating-card-div {
+.creating-card-div, .editing-card-div {
   position: absolute;
   background-color: #ffffff;
   width: 600px;
-  height: 50px;
+  height: 60px;
   z-index: 3;
   top: 0;
   margin-top: calc(50vh + 200px + 30px);
@@ -1176,6 +1184,14 @@ a {
   align-items: center;
   justify-content: space-around;
   transition: 0.2s ease all;
+}
+
+.editing-card-div {
+  width: 400px;
+}
+
+.editing-card-div h4:first-child {
+  margin-right: -50px;
 }
 
 .naming-page {
@@ -1196,7 +1212,7 @@ a {
   padding: 8px;
   font-weight: 700;
   cursor: pointer;
-  transition: 0.5s ease all;
+  transition: 0.3s ease all;
 }
 
 .create-button:hover{
@@ -1251,16 +1267,21 @@ a {
   font-weight: 700;
 }
 
-.projects-bar a {
+.projects-bar a, .edit-button {
   background-color: #7070e9;
   padding: 12px;
   border-radius: 5px;
   color: #ffffff;
-  border: 2px solid #7070e9;
-  transition: 0.3s ease all;
+  transition: 0.7s ease all;
+  cursor: pointer;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
 }
 
-.projects-bar a:hover {
+.projects-bar a:hover, .edit-button:hover{
   color: #7070e9;
   background-color: #ffffff;
   transform: scale(1.05) rotate(0.005turn);;
@@ -1288,21 +1309,25 @@ a {
   color: white;
 }
 
-.welcome-div button {
+.welcome-div button, .delete-card {
   background-color: #490000;
   padding:  12px;
   color: #ffffff;
   border-radius: 5px;
   font-weight: 700;
   cursor: pointer;
-  border: 4px solid #490000;
-  transition: 0.3s ease all;
+  border: none;
+  transition: 0.5s ease all;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
 }
  
-.welcome-div button:hover {
+.welcome-div button:hover, .delete-card:hover {
   color: #490000;
   background-color: #ffffff;
-  transform: rotate(0.001turn) scale(1.1);
+  transform: scale(1.05) rotate(0.005turn);;
 }
 
 .songs-item {

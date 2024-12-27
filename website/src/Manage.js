@@ -12,7 +12,7 @@ const Manage = () => {
 
         if(username === null) return window.location.href = "/login"
 
-        fetch(`https://localhost:7041/api/Projects/${username}`)
+        fetch(`https://localhost:7041/api/Projects/${username}?key=abc123`)
         .then(res => res.json())
         .then(data => {
             setCards(data.users);
@@ -32,6 +32,20 @@ const Manage = () => {
         
     }
 
+
+
+    const handleDelete = (nickname) => {
+        fetch(`https://localhost:7041/api/User/${nickname}?key=abc123`, {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        .then(() => {
+            console.log(`${nickname} deleted!`)
+        })
+    }
+
     return ( 
         <div className="manage-wrapper">
             <Header/>
@@ -46,12 +60,16 @@ const Manage = () => {
                 </div>
                 <div className="projects">
                     {cards.length > 0 && cards.reverse().map(item => (
-                        <div className="preview-card-background" onClick={() => window.location.href = `/${item.nickname}`} style={{backgroundColor: item.layout.pageBackgroundColor }}>
+                        <div className="preview-card-background" style={{backgroundColor: item.layout.pageBackgroundColor }}>
                             <div className="preview-card" style={{backgroundColor: item.layout.cardBackgroundColor}}>
-                                <span className="title" style={{color: item.layout.titleColor, fontFamily: item.layout.fontFamily, fontSize: '32px', fontWeight: '700'}}>{item.title}</span>
+                                <span className="title"  onClick={() => window.location.href = `/${item.nickname}`} style={{color: item.layout.titleColor, fontFamily: item.layout.fontFamily, fontSize: '32px', fontWeight: '700'}}>{item.title}</span>
                                 <span className="subtitle" style={{fontWeight: '600', color: item.fontColor, padding: '5px'}}>{item.subtitle}</span>
                                 <span className="subtitle" style={{fontWeight: '500', color: item.fontColor, padding: '5px'}}>{item.layout.baseLayout}</span>
                                 <span className="nickname" style={{fontWeight: '500', color: item.fontColor, padding: '5px'}}>yze.bio/{item.nickname}</span>
+                            </div>
+                            <div className="manage-card-buttons">
+                                <div className="delete-card" onClick={() => handleDelete(item.nickname)}>Delete</div>
+                                <a className="edit-button" href={`/edit/${item.nickname}`}>Edit</a>
                             </div>
                         </div>
                     ))}

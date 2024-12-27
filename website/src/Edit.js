@@ -63,21 +63,21 @@ const Edit = () => {
   useEffect(() => {
     document.title = "Editing card" ;
     const username = window.localStorage.getItem("username")
-    fetch(`https://localhost:7041/api/Account/GetId/${username}`)
+    fetch(`https://localhost:7041/api/Account/GetId/${username}?key=abc123`)
     .then(res => res.json())
     .then(data => {
         if(data === -1){
             return window.location.href = '/login'
         }
         setUserId(data)
-        const currentAccount = data
-        const username = window.location.href.split("/")[4]
-        fetch(`https://localhost:7041/api/Nickname?nickname=${username}`)
+        const currentAccount = Number(data)
+        const nickname = window.location.href.split("/")[4]
+        fetch(`https://localhost:7041/api/Nickname?nickname=${nickname}&key=abc123`)
         .then(res => res.json())
         .then(data => {
             if(data.status !== 400 && data.status !== 404){
                 if(data.accountId !== currentAccount){
-                    return window.location.href = "/manage"
+                  return window.location.href = "/manage"
                 }
                 setTitle(data.title)
                 setSubtitle(data.subtitle)
@@ -89,8 +89,7 @@ const Edit = () => {
                 setOldNickname(data.nickname)
                 setShowLayout(true)
                 setBorderRadius(data.layout.borderRadius)
-//                setPalette()
-//                setFontFamily
+
             }   
             else{
                 console.log("NOT FOUND")
@@ -170,6 +169,7 @@ const Edit = () => {
           return setAlert(true)
         }
       }
+      
     })
 
     const layout = {
@@ -195,27 +195,32 @@ const Edit = () => {
       links: links
     }
 
-    console.log(body)
-
-    fetch(`https://localhost:7041/api/User/${oldNickname}`, {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: 'PATCH',                                                              
-            body: JSON.stringify(body) 
-        })
-        .then(res => res.json())
-        .then(data => {
-          console.log(data)
-          if(data.status === 400){
-            setAlertText("An error occurred.")  
-            return setAlert(true)
-          }
-        }
-        )        
-        .then(() => {if(!alert){window.location.href = `/${nickname}`}})
-  }
+    fetch(`https://localhost:7041/api/User/${nickname}?key=abc123`, {
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+      },
+      method: 'PATCH',                                                              
+      body: JSON.stringify(body) 
+    })
+    .then(res => {
+      if (res.status === 204) {
+          return null; // Sem conteúdo para parsear
+      }
+      if (!res.ok) {
+          throw new Error(`Erro: ${res.status}`);
+      }
+      return res.json();
+      })
+    .then(data => {
+      console.log(data)
+      if(data.status === 400){
+        setAlertText("An error occurred.")  
+        return setAlert(true)
+      }
+    })        
+    .then(() => {if(!alert){window.location.href = `/${nickname}`}})
+}
 
   const getToken = async () => {
     const response = await fetch('https://accounts.spotify.com/api/token', {
@@ -279,10 +284,10 @@ const Edit = () => {
         </div>
       </div>
 
-      <div className="creating-card-div" style={{backgroundColor: palette[1]}}>
-        <h4 style={{fontFamily: fontFamily}}>Name your page:</h4>
-        <FocusInput palette={palette} className='naming-page' style={{ color: palette[3], backgroundColor: palette[1], borderBottomColor: palette[2]}} type="text"  placeholder="Your card name" value={nickname} onChange={(e) => setNickname(e.target.value)} />
-        <CreateButton palette={palette} style={{fontFamily: fontFamily}} className="create-button" onClick={() => createCard()}>Create</CreateButton>
+      <div className="editing-card-div" style={{backgroundColor: palette[1]}}>
+        <h4 style={{fontFamily: fontFamily}}>Your page:</h4>
+        <h4 style={{fontFamily: fontFamily}}>{nickname}</h4>
+        <CreateButton palette={palette} style={{fontFamily: fontFamily}} className="create-button" onClick={() => createCard()}>Finish</CreateButton>
       </div>
 
       <div className='edit-card-div'>
