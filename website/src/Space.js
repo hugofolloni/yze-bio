@@ -1,18 +1,12 @@
 import { useEffect, useState } from "react";
+import { createStars } from './Utils'
 
 const Curtain = () => {
 
     const [stars, setStars] = useState();
     
     useEffect(() => {
-        var createStars = []
-        for(let i = 0; i < 180; i++){
-            const size = Math.ceil(Math.random() * 3) + 2
-            const x = Math.ceil(Math.random() * window.innerWidth);
-            const y = Math.ceil(Math.random() * window.innerHeight);
-            createStars.push({x: x, y: y, size: `${size}px`})
-        }
-        setStars(createStars)
+        setStars(createStars())
     }, [])
 
     return ( 

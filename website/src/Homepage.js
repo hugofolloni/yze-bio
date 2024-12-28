@@ -18,7 +18,6 @@ const HeroSection = () => {
 
     const redirectTo = () => {
         const username = localStorage.getItem("username")
-        const password = localStorage.getItem("password")
 
         console.log(username)
         if(username === null) return window.location.href = "/login"

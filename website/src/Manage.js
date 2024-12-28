@@ -12,7 +12,7 @@ const Manage = () => {
 
         if(username === null) return window.location.href = "/login"
 
-        fetch(`https://localhost:7041/api/Projects/${username}?key=abc123`)
+        fetch(`https://localhost:7041/api/Projects/${username}?key=${process.env.REACT_APP_API_KEY}`)
         .then(res => res.json())
         .then(data => {
             setCards(data.users);
@@ -35,7 +35,7 @@ const Manage = () => {
 
 
     const handleDelete = (nickname) => {
-        fetch(`https://localhost:7041/api/User/${nickname}?key=abc123`, {
+        fetch(`https://localhost:7041/api/User/${nickname}?key=${process.env.REACT_APP_API_KEY}`, {
             method: 'DELETE',
             headers: {
                 "Content-Type": "application/json"

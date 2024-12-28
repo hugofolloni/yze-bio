@@ -687,10 +687,6 @@ a {
   transition: 0.5s ease all;
 }
 
-.layout-styled:hover{
-  /* transform: rotate(0.001turn) scale(1.01); */
-}
-
 .card-title, .card-title-input {
   font-weight: 700;
   margin-bottom: 10px;

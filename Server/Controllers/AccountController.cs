@@ -38,7 +38,7 @@ namespace Server.Controllers
         {
             if (!IsValidApiKey(key))
             {
-                return Unauthorized("Chave errada");
+                return Unauthorized("Wrong key");
             }
 
             var result = _context.Account.Where(c => c.Username == username).Include(c => c.Users).ThenInclude(u => u.Layout).FirstOrDefault();
@@ -56,7 +56,7 @@ namespace Server.Controllers
         {
             if (!IsValidApiKey(key))
             {
-                return Unauthorized("Chave errada");
+                return Unauthorized("Wrong key");
             }
 
             var result = from account in _context.Account
@@ -89,7 +89,7 @@ namespace Server.Controllers
         {
             if (!IsValidApiKey(key))
             {
-                return Unauthorized("Chave errada");
+                return Unauthorized("Wrong key");
             }
 
             if (id != account.Id)
@@ -124,7 +124,7 @@ namespace Server.Controllers
         {
             if (!IsValidApiKey(key))
             {
-                return Unauthorized("Chave errada");
+                return Unauthorized("Wrong key");
             }
             return await _context.Account.ToListAsync();
         }
@@ -136,7 +136,7 @@ namespace Server.Controllers
         {
             if (!IsValidApiKey(key))
             {
-                return Unauthorized("Chave errada");
+                return Unauthorized("Wrong key");
             }
 
             _context.Account.Add(account);
@@ -151,7 +151,7 @@ namespace Server.Controllers
         {
             if (!IsValidApiKey(key))
             {
-                return Unauthorized("Chave errada");
+                return Unauthorized("Wrong key");
             }
 
             var account = _context.Account.Where(c => c.Username == username).FirstOrDefault();
@@ -172,7 +172,7 @@ namespace Server.Controllers
         {
             if (!IsValidApiKey(key))
             {
-                return Unauthorized("Chave errada");
+                return Unauthorized("Wrong key");
             }
             
             var result = _context.Account.Where(c => c.Username == username).FirstOrDefault();

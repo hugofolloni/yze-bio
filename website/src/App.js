@@ -5,9 +5,7 @@ import Homepage from './Homepage';
 import Register from "./Register";
 import Login from "./Login";
 import Manage from "./Manage";
-import Create from "./Create";
-import Edit from "./Edit"
-import Reset from "./Reset";
+import Customize from "./Customize"
 
 function App() {
     return (
@@ -18,9 +16,8 @@ function App() {
                 <Route exact path="/login" element={<Login />} />
                 <Route exact path="/manage" element={<Manage />} />
                 <Route exact path="/register" element={<Register />} />
-                <Route exact path="/create" element={<Create />} />
-                <Route exact path="/edit/:id" element={<Edit />} />
-                <Route exact path="/reset" element={<Reset />} />
+                <Route exact path="/create" element={<Customize edit={false}/>} />
+                <Route exact path="/edit/:id" element={<Customize edit={true}/>} />
                 <Route path="*" element={<Card />} />
           </Routes> 
         </div>

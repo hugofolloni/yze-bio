@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { colors, hobbies, fonts, borders, availableLinks } from './assets'
 import styled from "styled-components"
 import Add from "@mui/icons-material/Add";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Buffer } from 'buffer';
 import { faXTwitter, faGithub, faInstagram, faTiktok, faDiscord, faSquareLastfm, faSteam, faPinterest, faLetterboxd, faTwitch, faSpotify, faYoutube, faTumblr, faReddit } from '@fortawesome/free-brands-svg-icons';
 import { faX } from '@fortawesome/free-solid-svg-icons'
+import { getTrackInfo, getToken } from "./Utils";
 
 const FocusInput = styled.input`
   border-bottom: 2px solid ${props => props.palette[1]};
@@ -55,19 +55,52 @@ const SongsItem = styled.div`
   }
 `
 
-const Create = () => {
+const Customize = (props) => {
 
-  useEffect(() => {
-    document.title = "Creating card" ;
-    const username = window.localStorage.getItem("username")
-    fetch(`https://localhost:7041/api/Account/GetId/${username}&key=abc123`)
+  const [showLayout, setShowLayout] = useState(false)
+
+  const setCurrentInfo = (data) => {
+    const currentAccount = Number(data)
+    const nickname = window.location.href.split("/")[4]
+    fetch(`https://localhost:7041/api/Nickname?nickname=${nickname}&key=${process.env.REACT_APP_API_KEY}`)
     .then(res => res.json())
     .then(data => {
-      console.log(data)
-      if(data === -1){
-        return window.location.href = '/login'
-      }
-      setUserId(data)
+        if(data.status !== 400 && data.status !== 404){
+            if(data.accountId !== currentAccount){
+              return window.location.href = "/manage"
+            }
+            setTitle(data.title)
+            setSubtitle(data.subtitle)
+            setDescription(data.description)
+            setLinks(data.links)
+            setSong(data.song)
+            setGif(data.gif)
+            setNickname(data.nickname)
+            setShowLayout(true)
+            setBorderRadius(data.layout.borderRadius)
+        }   
+        else{
+            console.log("NOT FOUND")
+        }
+    })
+  }
+
+  useEffect(() => {
+    document.title = "Editing card" ;
+    const username = window.localStorage.getItem("username")
+    fetch(`https://localhost:7041/api/Account/GetId/${username}?key=${process.env.REACT_APP_API_KEY}`)
+    .then(res => res.json())
+    .then(data => {
+        if(data === -1){
+            return window.location.href = '/login'
+        }
+        setUserId(data)
+        if(props.edit){
+          setCurrentInfo(data)
+        }
+        else {
+          setShowLayout(true)
+        }
     })
   }, [])
 
@@ -122,7 +155,7 @@ const Create = () => {
 
   const [userId, setUserId] = useState(null);
 
-  const createCard = () => {
+  const pushCard = () => {
     if(nickname === "") {
       setAlertText("The name can't be empty.")  
       return setAlert(true)
@@ -167,55 +200,59 @@ const Create = () => {
       links: links
     }
 
+    if(props.edit){
+      editCard(body)
+    }
+    else {
+      createCard(body)
+    }
+}
+
+  const createCard = (body) => {
     console.log(body)
-
-    fetch(`https://localhost:7041/api/User?key=abc123`, {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',                                                              
-            body: JSON.stringify(body) 
-        })
-        .then(res => res.json())
-        .then(data => {
-          console.log(data)
-          if(data.status === 400){
-            setAlertText("An error occurred.")  
-            return setAlert(true)
-          }
+    fetch(`https://localhost:7041/api/User?key=${process.env.REACT_APP_API_KEY}`, {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',                                                              
+        body: JSON.stringify(body) 
+      })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+        if(data.status === 400){
+          setAlertText("An error occurred.")  
+          return setAlert(true)
         }
-        )        
-        .then(() => {if(!alert){window.location.href = `/${nickname}`}})
+      })        
+      .then(() => {if(!alert){window.location.href = `/${nickname}`}})
   }
 
-  const getToken = async () => {
-    const response = await fetch('https://accounts.spotify.com/api/token', {
-      method: 'POST',
-      body: new URLSearchParams({
-        'grant_type': 'client_credentials',
-      }),
+  const editCard = (body) => {
+    fetch(`https://localhost:7041/api/User/${nickname}?key=${process.env.REACT_APP_API_KEY}`, {
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': 'Basic ' + (Buffer.from(process.env.REACT_APP_SPOTIFY_ID + ':' + process.env.REACT_APP_SPOTIFY_SECRET).toString('base64')),
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
       },
-    });
-  
-    return await response.json();
+      method: 'PATCH',                                                              
+      body: JSON.stringify(body) 
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+      if(data.status === 400){
+        setAlertText("An error occurred.")  
+        return setAlert(true)
+      }
+    })        
+    .then(() => {if(!alert){window.location.href = `/${nickname}`}})
   }
 
-  const getTrackInfo = async (access_token) => {
-    const response = await fetch(`https://api.spotify.com/v1/search?q=${songText}&type=track&market=US`, {
-      method: 'GET',
-      headers: { 'Authorization': 'Bearer ' + access_token },
-    });
-  
-    return await response.json();
-  }
 
   const searchSong = () => {
     getToken().then(response => {
-      getTrackInfo(response.access_token).then(profile => {
+      getTrackInfo(response.access_token, songText).then(profile => {
         const songs = []
         for(let i = 0; i < profile.tracks.items.length; i++){
           songs.push({name: profile.tracks.items[i].name, id: profile.tracks.items[i].id, artists: profile.tracks.items[i].artists[0].name, img: profile.tracks.items[i].album.images[0].url})
@@ -289,7 +326,8 @@ const Create = () => {
 
   return (  
     <div className="card-wrapper" style={{backgroundColor: palette[0], fontFamily: fontFamily}}>
-
+{ showLayout && (
+    <div className="card-wrapper" >
       <div className="showcases">
         <div className="palette-picker" onClick={() => setPaletteShowcase(true)}>
           <PalettePreview palette={palette} />
@@ -303,12 +341,19 @@ const Create = () => {
           <PaletteSpan palette={palette}>Pick the style</PaletteSpan>
         </div>
       </div>
-
+      {!props.edit && (
       <div className="creating-card-div" style={{backgroundColor: palette[1]}}>
         <h4 style={{fontFamily: fontFamily}}>Name your page:</h4>
         <FocusInput palette={palette} className='naming-page' style={{ color: palette[3], backgroundColor: palette[1], borderBottomColor: palette[2]}} type="text"  placeholder="Your card name" value={nickname} onChange={(e) => setNickname(e.target.value)} />
-        <CreateButton palette={palette} style={{fontFamily: fontFamily}} className="create-button" onClick={() => createCard()}>Create</CreateButton>
-      </div>
+        <CreateButton palette={palette} style={{fontFamily: fontFamily}} className="create-button" onClick={() => pushCard()}>Create</CreateButton>
+      </div>)}
+
+      {props.edit && (
+      <div className="editing-card-div" style={{backgroundColor: palette[1]}}>
+        <h4 style={{fontFamily: fontFamily}}>Your page:</h4>
+        <h4 style={{fontFamily: fontFamily}}>{nickname}</h4>
+        <CreateButton palette={palette} style={{fontFamily: fontFamily}} className="create-button" onClick={() => pushCard()}>Finish</CreateButton>
+      </div>)}
 
       <div className='edit-card-div'>
         <div style={{backgroundColor: palette[1], borderRadius: `${borderRadius}px`}} className='layout-styled'>
@@ -512,7 +557,7 @@ const Create = () => {
        <div className="songs-showcase" style={{backgroundColor: palette[1]}}>
           <div className='links-input'>
             <FocusInput palette={palette} className='link-url' onKeyDown={(e) => {if(e.key === "Enter"){searchGif()}}} style={{color: palette[3], backgroundColor: palette[1], borderBottomColor: palette[0]}} type="text"  placeholder="Search a GIF" value={gifText} onChange={(e) => setGifText(e.target.value)}/>
-            <CreateButton palette={palette} style={{marginTop: '10px'}} className="create-button" onClick={() => searchGif()}>Search</CreateButton>
+            <CreateButton palette={palette} style={{marginTop: '10px'}} className="create-button" onClick={() => searchGif(gifText)}>Search</CreateButton>
           </div>
           <div className="songs-area">
           {gifResults.map(item => (
@@ -585,7 +630,8 @@ const Create = () => {
       { (interestChooser || paletteShowcase || addingLink || alert || songPicker || gifPicker || styleShowcase) && (
         <div className="translucent-background" onClick={() => {setInterestChooser(false); setPaletteShowcase(false); setStyleShowcase(false); setAddingLink(false); setAlert(false); setSongPicker(false); setGifPicker(false);}}/>
       )}
-
+      </div>
+    )}
     </div>
     );
 }
@@ -600,43 +646,4 @@ const Showcasing = (props) => {
   )
 }
 
-// const UploadPhoto = () => {
-
-//   const [selectedImage, setSelectedImage] = useState(null);
-//   const [nickname, setNickname] = useState("");
-
-
-//   const handlePhotoUpload = async (event) => {
-//     event.preventDefault();
-//     if (!selectedImage) return;
-
-//     const formData = new FormData();
-//     formData.append("nickname", nickname); 
-//     formData.append("profileImage", selectedImage);
-
-//     await axios.patch(`https://localhost:7041/api/Photo/${nickname}`, formData, {
-//       headers: {
-//         "Content-Type": "multipart/form-data",
-//       },
-//     });
-//   };
-
-//   return (
-//     <div className="container">
-//       <form onSubmit={handlePhotoUpload}>
-//         <div>
-//           <label htmlFor="profileImage">Profile Photo:</label>
-//           <input type="file" id="profileImage" name="profileImage" onChange={(e) => setSelectedImage(e.target.files[0])} />
-//         </div>
-//         <div>
-//           <label htmlFor="nickname">Nickname:</label>
-//           <input type="text" id="nickname" name="nickname" value={nickname} onChange={(e) => setNickname(e.target.value)} />
-//         </div>
-      
-//         <button type="submit">Create card</button>
-//       </form>
-//     </div>
-//   );
-// }
-
-export default Create;
+export default Customize;

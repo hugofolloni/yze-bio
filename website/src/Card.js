@@ -13,7 +13,7 @@ const Card = () => {
     const [pageBackgroundColor, setPageBackgroundColor] = useState("#eaeaea")
 
     useEffect(() => {
-        fetch(`https://localhost:7041/api/Nickname?nickname=${username}&key=abc123`)
+        fetch(`https://localhost:7041/api/Nickname?nickname=${username}&key=${process.env.REACT_APP_API_KEY}`)
         .then(res => res.json())
         .then(data => {
             if(data.status !== 400 && data.status !== 404){
@@ -85,7 +85,7 @@ const Basic = (props) => {
                 <div className='card-links'>
                     {props.data.links.map(item => {
                         if(item.action === "redirect") return (
-                            <div style={{margin:'8px', cursor: 'pointer'}}  onClick={() => window.open(item.value)} target="_blank" rel='noreferrer'>
+                            <a style={{margin:'8px', cursor: 'pointer'}}  href={item.value} target="_blank" rel='noreferrer'>
                                 {item.type === 'twitter' && <FontAwesomeIcon icon={faXTwitter} size="2x" color="white" className='icon' />}
                                 {item.type === 'github' && <FontAwesomeIcon icon={faGithub} size="2x" color="white" className='icon' />}
                                 {item.type === 'instagram' && <FontAwesomeIcon icon={faInstagram} size="2x" color="white" className='icon' />}
@@ -100,7 +100,7 @@ const Basic = (props) => {
                                 {item.type === 'youtube' && <FontAwesomeIcon icon={faYoutube} size="2x" color="white" className='icon' />}
                                 {item.type === 'tumblr' && <FontAwesomeIcon icon={faTumblr} size="2x" color="white" className='icon' />}
                                 {item.type === 'reddit' && <FontAwesomeIcon icon={faReddit} size="2x" color="white" className='icon' />}
-                            </div>
+                            </a>
                         )
                     else return (
                         <div style={{margin:'8px', cursor: 'pointer'}}  onClick={() => {navigator.clipboard.writeText(item.value); setShowMessage(true); setMessage(`${item.value} copied to clipboard`); setTimeout(() => setShowMessage(false), 3000)}} target="_blank" rel='noreferrer'>

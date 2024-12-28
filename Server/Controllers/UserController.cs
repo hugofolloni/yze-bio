@@ -37,7 +37,7 @@ namespace Server.Controllers
         {
             if (!IsValidApiKey(key))
             {
-                return Unauthorized("Chave errada");
+                return Unauthorized("Wrong key");
             }
             return await _context.User.Include(x => x.Layout).Include(x => x.Links).ToListAsync();
         }
@@ -49,7 +49,7 @@ namespace Server.Controllers
 
             if (!IsValidApiKey(key))
             {
-                return Unauthorized("Chave errada");
+                return Unauthorized("Wrong key");
             }
 
             var result = _context.User.Include(x => x.Layout).Include(x => x.Links).Include(x => x.Interests).Where(x => x.Nickname == nickname).ToList();
@@ -71,7 +71,7 @@ namespace Server.Controllers
         {
             if (!IsValidApiKey(key))
             {
-                return Unauthorized("Chave errada");
+                return Unauthorized("Wrong key");
             }
 
             _context.User.Add(user);
@@ -86,7 +86,7 @@ namespace Server.Controllers
         {
             if (!IsValidApiKey(key))
             {
-                return Unauthorized("Chave errada");
+                return Unauthorized("Wrong key");
             }
 
             if (profileImage == null || profileImage.Length == 0)
@@ -167,7 +167,7 @@ namespace Server.Controllers
         {
             if (!IsValidApiKey(key))
             {
-                return Unauthorized("Chave errada");
+                return Unauthorized("Wrong key");
             }
 
             try
@@ -220,7 +220,7 @@ namespace Server.Controllers
         {
             if (!IsValidApiKey(key))
             {
-                return Unauthorized("Chave errada");
+                return Unauthorized("Wrong key");
             }
 
             if (profileImage == null || profileImage.Length == 0)
@@ -277,7 +277,7 @@ namespace Server.Controllers
         {
             if (!IsValidApiKey(key))
             {
-                return Unauthorized("Chave errada");
+                return Unauthorized("Wrong key");
             }
 
             var user = _context.User.Where(c => c.Nickname == nickname).FirstOrDefault();
