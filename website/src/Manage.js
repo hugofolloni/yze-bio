@@ -61,8 +61,8 @@ const Manage = () => {
                 <div className="projects">
                     {cards.length > 0 && cards.reverse().map(item => (
                         <div className="preview-card-background" style={{backgroundColor: item.layout.pageBackgroundColor }}>
-                            <div className="preview-card" style={{backgroundColor: item.layout.cardBackgroundColor}}>
-                                <span className="title"  onClick={() => window.location.href = `/${item.nickname}`} style={{color: item.layout.titleColor, fontFamily: item.layout.fontFamily, fontSize: '32px', fontWeight: '700'}}>{item.title}</span>
+                            <div className="preview-card" onClick={() => window.location.href = `/${item.nickname}`} style={{backgroundColor: item.layout.cardBackgroundColor}}>
+                                <span className="title"  style={{color: item.layout.titleColor, fontFamily: item.layout.fontFamily, fontSize: '32px', fontWeight: '700'}}>{item.title}</span>
                                 <span className="subtitle" style={{fontWeight: '600', color: item.fontColor, padding: '5px'}}>{item.subtitle}</span>
                                 <span className="subtitle" style={{fontWeight: '500', color: item.fontColor, padding: '5px'}}>{item.layout.baseLayout}</span>
                                 <span className="nickname" style={{fontWeight: '500', color: item.fontColor, padding: '5px'}}>yze.bio/{item.nickname}</span>

@@ -7,7 +7,7 @@ import { Fade } from "react-awesome-reveal";
 
 const Card = () => {
 
-    const username = window.location.href.split('3000/')[1]
+    const username = window.location.href.split('3000/')[1].toLowerCase()
 
     const [data, setData] = useState({status: 999})
     const [pageBackgroundColor, setPageBackgroundColor] = useState("#eaeaea")
@@ -70,13 +70,13 @@ const Basic = (props) => {
                     )))}
                 </div>
 
-                <div style={{ position: 'absolute', top: 0, right: 0, marginRight: '30px' }}>
+                <div className='gif-div'>
                     { props.data.gif !== "" && (
                         <img className='gif-img' src={`https://i.giphy.com/${props.data.gif}.webp`} alt='gif'/>
                     )}
                 </div>
 
-                <div style={{ position: 'absolute', bottom: 0, left: 0, marginLeft: '15px', marginBottom: '10px' }}>                
+                <div className='song-div'>                
                     { props.data.song !== "" && (
                             <iframe title='spotify' className="song-iframe" src={`https://open.spotify.com/embed/track/${props.data.song}?utm_source=generator&theme=1`}  allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" />
                         )}

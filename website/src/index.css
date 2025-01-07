@@ -1353,3 +1353,139 @@ a {
   font-size: 25px;
   flex-wrap: nowrap;
 }
+
+.song-div {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin-left: 15px;
+  margin-bottom: 10px;
+}
+
+.gif-div {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-right: 30px;
+}
+
+@media (max-width: 1000px) {
+  .card-div {
+    width: 90vw;
+    height: fit-content;
+  }
+
+  .song-div, .gif-div {
+    position: relative;
+    width: 80vw;
+    margin: 0 0 20px 0;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .gif-div {
+    align-items: center;
+  }
+
+  .interest-wrapper{
+    margin-bottom: 20px;
+    width: 90%;
+  }
+
+  .gif-img {
+    margin-top: 5px;
+  }
+
+  .song-iframe {
+    width: 100%;
+  }
+
+  .card-title, .card-subtitle, .card-description {
+    width: 90%;
+    height: fit-content;
+    margin-bottom: 20px;
+  }
+
+  .card-links { 
+    position: relative;
+    right: 0;
+    margin-right: 30px;
+    margin-bottom: 20px;
+    height: fit-content;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-flow: row;
+  }
+
+  .home-main{
+    flex-direction: column;
+    width: 100vw;
+  }
+
+  .translucent-container {
+    width: 100vw;
+    flex-direction: column;
+    height: 80vh;
+  }
+
+  .translucent-container .cards, .translucent-container .texts {
+    width: 90vw;
+    padding: 0;
+    text-align: center;
+    align-items: center;
+    
+  }
+
+  .main-title-first {
+    font-size: 10vw;
+  }
+
+  .main-title {
+    font-size: 8vw;
+  }
+
+  .translucent-container .individual-card {
+    width: 90vw;
+    height: 35vh;
+    margin-top: 20px;
+  }
+
+  .individual-card .spotify-embed {
+    margin-top: 40px;
+    z-index: 2;
+  }
+
+  .individual-card .links {
+    z-index: 1;
+  }
+
+  .translucent-container .individual-card-2 {
+    display: none;
+  }
+
+  .header .search-bar-div {
+    display: none;
+  }
+
+  .header {
+    justify-content: center;
+  }
+
+  .welcome-div {
+    width: 80vw;
+  }
+
+  .projects-wrapper {
+    width: 90vw;
+    margin-top: 20px;
+  }
+
+  .projects {
+    width: 90vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
