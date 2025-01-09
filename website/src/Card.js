@@ -61,7 +61,7 @@ const Basic = (props) => {
         <div className='card-div' style={{fontFamily: props.data.layout.fontFamily}}>
             <div className='layout-styled' style={{ backgroundColor: props.data.layout.cardBackgroundColor, borderRadius: `${props.data.layout.borderRadius}px`}}>
                 <span className='card-title' style={{color: props.data.layout.titleColor}}>{props.data.title}</span>
-                <span className='card-subtitle' styke={{color: props.data.layout.fontColor}}>{props.data.subtitle}</span>
+                <span className='card-subtitle' style={{ color: props.data.layout.fontColor }}>{props.data.subtitle}</span>
                 <span className='card-description' style={{ color: props.data.layout.fontColor}}>{props.data.description}</span>
 
                 <div className='interest-wrapper'>                
@@ -72,7 +72,7 @@ const Basic = (props) => {
 
                 <div className='gif-div'>
                     { props.data.gif !== "" && (
-                        <img className='gif-img' src={`https://i.giphy.com/${props.data.gif}.webp`} alt='gif'/>
+                        <img className='gif-img' style={{borderRadius: `${props.data.layout.borderRadius}px`}} src={`https://i.giphy.com/${props.data.gif}.webp`} alt='gif'/>
                     )}
                 </div>
 

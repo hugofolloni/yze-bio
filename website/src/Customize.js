@@ -378,11 +378,11 @@ const Customize = (props) => {
               )}
             </div>
 
-            <div style={{ position: 'absolute', top: 0, right: 0, marginRight: '30px'}}>
+            <div className="gif-div">
                 {
                     (gif !== "" && (
                       <div style={{width: '100%', height:'100%'}}>
-                        <img src={`https://i.giphy.com/${gif}.webp`} className='gif-img' alt='gif'/>
+                        <img src={`https://i.giphy.com/${gif}.webp`} className='gif-img' style={{borderRadius: `${borderRadius}px`}} alt='gif'/>
                         <div style={{width: '25px', height: '25px', margin: '-10px'}} onClick={() => setGif("")} className="deleter"><FontAwesomeIcon icon={faX} /></div>
 
                       </div>
@@ -392,7 +392,7 @@ const Customize = (props) => {
                 }
             </div>
 
-            <div style={{ position: 'absolute', bottom: 0, left: 0, marginLeft: '15px', marginBottom: '10px' }}>                
+            <div className='song-div'>                
                 {
                     (song !== "" && (
                       <div style={{width: '100%', height:'100%'}}>
@@ -409,7 +409,7 @@ const Customize = (props) => {
            
             <div className='card-links'>
               { (links.length > 0 && links.map((item, index) => (
-                  <div style={{margin:'8px'}} onClick={() => {setAddingLink(true); setEditingIndex(index); console.log(availableLinks.filter(link => link.type === item.type)[0]); setSearchLink(availableLinks.filter(link => link.type === item.type)[0]); setNewLinkUrl(item.value)}}>
+                  <div style={{margin:'8px', cursor: 'pointer'}} onClick={() => {setAddingLink(true); setEditingIndex(index); console.log(availableLinks.filter(link => link.type === item.type)[0]); setSearchLink(availableLinks.filter(link => link.type === item.type)[0]); setNewLinkUrl(item.value)}}>
                       {item.type === 'twitter' && <FontAwesomeIcon icon={faXTwitter} size="2x" color={palette[3]}className='icon' />}
                       {item.type === 'github' && <FontAwesomeIcon icon={faGithub} size="2x" color={palette[3]}className='icon' />}
                       {item.type === 'instagram' && <FontAwesomeIcon icon={faInstagram} size="2x" color={palette[3]}className='icon' />}
@@ -621,7 +621,7 @@ const Customize = (props) => {
             })}
               </div>
             </div>
-            <FocusInput palette={palette} className='link-url' style={{color: palette[3], width: '300px', backgroundColor: palette[1], borderBottomColor: palette[0]}} type="text"  placeholder={searchLink.placeholder}  value={newLinkUrl} onChange={(e) => setNewLinkUrl(e.target.value)}/>
+            <FocusInput palette={palette} className='link-url' style={{color: palette[3], backgroundColor: palette[1], borderBottomColor: palette[0]}} type="text"  placeholder={searchLink.placeholder}  value={newLinkUrl} onChange={(e) => setNewLinkUrl(e.target.value)}/>
             <CreateButton palette={palette} style={{marginTop: '10px'}} className="create-button" onClick={() => handleAddLink()}>Add</CreateButton>
           </div>
       </div>

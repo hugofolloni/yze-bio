@@ -8,7 +8,7 @@ const Homepage = () => {
     return ( 
         <div className="homepage-wrapper">
             <Space />
-            <Header/>
+            <Header logged={false}/>
             <HeroSection />
         </div>
      );
