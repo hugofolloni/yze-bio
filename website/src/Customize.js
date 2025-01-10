@@ -78,6 +78,9 @@ const Customize = (props) => {
             setNickname(data.nickname)
             setShowLayout(true)
             setBorderRadius(data.layout.borderRadius)
+            setPalette([data.layout.pageBackgroundColor, data.layout.cardBackgroundColor, data.layout.titleColor, data.layout.fontColor])
+            setBorderRadius(data.layout.borderRadius)
+            setPaletteShowcase(false)
         }   
         else{
             console.log("NOT FOUND")
@@ -88,20 +91,27 @@ const Customize = (props) => {
   useEffect(() => {
     document.title = "Editing card" ;
     const username = window.localStorage.getItem("username")
-    fetch(`https://localhost:7041/api/Account/GetId/${username}?key=${process.env.REACT_APP_API_KEY}`)
-    .then(res => res.json())
-    .then(data => {
-        if(data === -1){
-            return window.location.href = '/login'
-        }
-        setUserId(data)
-        if(props.edit){
-          setCurrentInfo(data)
-        }
-        else {
-          setShowLayout(true)
-        }
-    })
+    const hash = window.localStorage.getItem("hash")
+    fetch(`https://localhost:7041/api/Verification?username=${username}&hash=${hash}&key=${process.env.REACT_APP_API_KEY}`)
+    .then(res => {
+      if(res.status === 401) return window.location.href = "/login"
+  })
+  .then(() => {
+      fetch(`https://localhost:7041/api/Account/GetId/${username}?key=${process.env.REACT_APP_API_KEY}`)
+      .then(res => res.json())
+      .then(data => {
+          if(data === -1){
+              return window.location.href = '/login'
+          }
+          setUserId(data)
+          if(props.edit){
+            setCurrentInfo(data)
+          }
+          else {
+            setShowLayout(true)
+          }
+      })
+  })
   }, [])
 
   const [nickname, setNickname] = useState("")
@@ -574,22 +584,22 @@ const Customize = (props) => {
           <h2 style={{color: palette[2]}}>Adding link</h2>
           <div className='links-input'>
             <div className='hovering-dropdown' onMouseOver={() => setHoveringDropdown(true)} onMouseOut={() => setHoveringDropdown(false)}>
-              <div className='current-dropdown' style={{backgroundColor: palette[2]}} onClick={() => {setSearchLink(searchLink); setHoveringDropdown(false)}} >
-                    {searchLink.type === 'twitter' && <FontAwesomeIcon icon={faXTwitter} size="2x" color={palette[3]}className='icon' />}
-                    {searchLink.type === 'github' && <FontAwesomeIcon icon={faGithub} size="2x" color={palette[3]}className='icon' />}
-                    {searchLink.type === 'instagram' && <FontAwesomeIcon icon={faInstagram} size="2x" color={palette[3]}className='icon' />}
-                    {searchLink.type === 'tiktok' && <FontAwesomeIcon icon={faTiktok} size="2x" color={palette[3]}className='icon' />}
-                    {searchLink.type === 'discord' && <FontAwesomeIcon icon={faDiscord} size="2x" color={palette[3]}className='icon' />}
-                    {searchLink.type === 'lastfm' && <FontAwesomeIcon icon={faSquareLastfm} size="2x" color={palette[3]}className='icon' />}
-                    {searchLink.type === 'steam' && <FontAwesomeIcon icon={faSteam} size="2x" color={palette[3]}className='icon' />}
-                    {searchLink.type === 'pinterest' && <FontAwesomeIcon icon={faPinterest} size="2x" color={palette[3]}className='icon' />}
-                    {searchLink.type === 'letterboxd' && <FontAwesomeIcon icon={faLetterboxd} size="2x" color={palette[3]}className='icon' />}
-                    {searchLink.type === 'twitch' && <FontAwesomeIcon icon={faTwitch} size="2x" color={palette[3]}className='icon' />}
-                    {searchLink.type === 'spotify' && <FontAwesomeIcon icon={faSpotify} size="2x" color={palette[3]}className='icon' />}
-                    {searchLink.type === 'youtube' && <FontAwesomeIcon icon={faYoutube} size="2x" color={palette[3]}className='icon' />}
-                    {searchLink.type === 'tumblr' && <FontAwesomeIcon icon={faTumblr} size="2x" color={palette[3]}className='icon' />}
-                    {searchLink.type === 'reddit' && <FontAwesomeIcon icon={faReddit} size="2x" color={palette[3]}className='icon' />}              
-                    <span style={{color: palette[3], fontWeight: 700}}>
+              <div className='current-dropdown' style={{backgroundColor: palette[2] }} onClick={() => {setSearchLink(searchLink); setHoveringDropdown(false)}} >
+                    {searchLink.type === 'twitter' && <FontAwesomeIcon icon={faXTwitter} size="2x" color={palette[1]}className='icon' />}
+                    {searchLink.type === 'github' && <FontAwesomeIcon icon={faGithub} size="2x" color={palette[1]}className='icon' />}
+                    {searchLink.type === 'instagram' && <FontAwesomeIcon icon={faInstagram} size="2x" color={palette[1]}className='icon' />}
+                    {searchLink.type === 'tiktok' && <FontAwesomeIcon icon={faTiktok} size="2x" color={palette[1]}className='icon' />}
+                    {searchLink.type === 'discord' && <FontAwesomeIcon icon={faDiscord} size="2x" color={palette[1]}className='icon' />}
+                    {searchLink.type === 'lastfm' && <FontAwesomeIcon icon={faSquareLastfm} size="2x" color={palette[1]}className='icon' />}
+                    {searchLink.type === 'steam' && <FontAwesomeIcon icon={faSteam} size="2x" color={palette[1]}className='icon' />}
+                    {searchLink.type === 'pinterest' && <FontAwesomeIcon icon={faPinterest} size="2x" color={palette[1]}className='icon' />}
+                    {searchLink.type === 'letterboxd' && <FontAwesomeIcon icon={faLetterboxd} size="2x" color={palette[1]}className='icon' />}
+                    {searchLink.type === 'twitch' && <FontAwesomeIcon icon={faTwitch} size="2x" color={palette[1]}className='icon' />}
+                    {searchLink.type === 'spotify' && <FontAwesomeIcon icon={faSpotify} size="2x" color={palette[1]}className='icon' />}
+                    {searchLink.type === 'youtube' && <FontAwesomeIcon icon={faYoutube} size="2x" color={palette[1]}className='icon' />}
+                    {searchLink.type === 'tumblr' && <FontAwesomeIcon icon={faTumblr} size="2x" color={palette[1]}className='icon' />}
+                    {searchLink.type === 'reddit' && <FontAwesomeIcon icon={faReddit} size="2x" color={palette[1]}className='icon' />}              
+                    <span style={{color: palette[1], fontWeight: 700}}>
                       {searchLink.label}
                     </span>
               </div>

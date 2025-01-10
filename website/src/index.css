@@ -626,6 +626,17 @@ a {
   margin-top: 100px;
 }
 
+.loading-div {
+  width: 1000px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-div h3 {
+  color: #efefef;
+}
+
 .projects-title {
   font-size: 32px;
   font-weight: 500;
@@ -845,7 +856,7 @@ a {
 }
 
 .translucent-background {
-  position: absolute;
+  position: fixed;
   width: 100vw;
   height: 100vh;
   z-index: 3;
@@ -1420,6 +1431,34 @@ a {
   width: 300px;
 }
 
+.delete-modal {
+  position: absolute;
+  top: 30vh;
+  width: 300px;
+  height: 200px;
+  background-color: white;
+  z-index: 3;
+  padding: 50px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-width: 90vw;
+}
+
+.delete-button {
+  background-color: #490000;
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
 @media (max-width: 1000px) {
   .card-div, .edit-card-div {
     width: 90vw;
@@ -1609,4 +1648,13 @@ a {
   .palette-item span {
     display: none;
   }
+
+  .loading-div {
+    width: 90vw;
+    margin-top: 10vh;
+  }
+
+  .delete-modal {
+    top: 40vh
+  } 
 }

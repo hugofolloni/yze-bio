@@ -165,6 +165,12 @@ const colors = [
     "pageBackgroundColor": "#e8e8a6",
     "fontColor": "#444444",
     "titleColor": "#556b2f"
+  },{
+    "name": "Gotham",
+    "cardBackgroundColor": "#000000",
+    "pageBackgroundColor": "#000000",
+    "fontColor": "#ffffff",
+    "titleColor": "#ffffff"
   },
   {
     "name": "Warm Sand",

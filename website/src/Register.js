@@ -25,9 +25,9 @@ const Register = () => {
             } )  
         })
         .then(res => res.json())
-        .then(() => {
+        .then((data) => {
             window.localStorage.setItem("username", username)
-            window.localStorage.setItem("password", sha1(password))
+            window.localStorage.setItem("hash", data.hash)
             window.location.href = "/manage"
         })
     }

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Profile.Context;
 using Profile.Models;
 using Microsoft.Extensions.Configuration;
+using Server.Utils;
 
 
 namespace Server.Controllers
@@ -52,7 +53,7 @@ namespace Server.Controllers
         }
 
         [HttpGet("/api/Login/{username}", Name = "Login")]
-        public ActionResult GetAccountByUsername(string username, [FromQuery] string key)
+        public ActionResult GetAccountByUsername(string username, [FromQuery] string key, [FromQuery] string password)
         {
             if (!IsValidApiKey(key))
             {
@@ -73,7 +74,11 @@ namespace Server.Controllers
                 return NotFound();
             }
 
-            return Ok(userWithLayout);
+            if (!userWithLayout.Password.Equals(password)) {
+                return Unauthorized(new { Message = "Incorrect password." });
+            }
+
+            return Ok(new {user = userWithLayout, hash = Utils.Utils.CreateKey(username, password)} );
         }
 
         [HttpGet("/api/AccountExists/{username},{email}")]
@@ -142,7 +147,7 @@ namespace Server.Controllers
             _context.Account.Add(account);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAccount", new { id = account.Id }, account);
+            return CreatedAtAction("GetAccount", new { id = account.Id }, new { account, hash = Utils.Utils.CreateKey(login: account.Username, password: account.Password) });
         }
 
         // DELETE: api/Account/5

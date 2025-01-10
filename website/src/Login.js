@@ -12,16 +12,15 @@ const Login = () => {
         if(username === "" || password === ""){
             return setErrorMessage("All fields are required to proceed!")
         }     
-        fetch(`https://localhost:7041/api/Login/${username}?key=${process.env.REACT_APP_API_KEY}`)
+        fetch(`https://localhost:7041/api/Login/${username}?key=${process.env.REACT_APP_API_KEY}&password=${sha1(password)}`)
         .then(res => res.json())
         .then(data => {
-            if(username === data.username && sha1(password) === data.password){
-                console.log("Logado!")
+            console.log(data)
+            if(data.hash){
                 window.localStorage.setItem("username", username)
-                window.localStorage.setItem("password", sha1(password))
-                window.location.href = "/manage"
-            }
-            else {
+                window.localStorage.setItem("hash", data.hash)
+                window.location.href = "/manage"            
+            } else {
                 setErrorMessage("Credentials not found!");
                 setUsername("")
                 setPassword("")
