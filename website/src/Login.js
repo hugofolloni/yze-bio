@@ -12,7 +12,7 @@ const Login = () => {
         if(username === "" || password === ""){
             return setErrorMessage("All fields are required to proceed!")
         }     
-        fetch(`https://localhost:7041/api/Login/${username}?key=${process.env.REACT_APP_API_KEY}&password=${sha1(password)}`)
+        fetch(`https://yze-bio-production.up.railway.app/api/Login/${username}?key=${process.env.REACT_APP_API_KEY}&password=${sha1(password)}`)
         .then(res => res.json())
         .then(data => {
             console.log(data)

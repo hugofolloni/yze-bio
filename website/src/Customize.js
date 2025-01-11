@@ -62,7 +62,7 @@ const Customize = (props) => {
   const setCurrentInfo = (data) => {
     const currentAccount = Number(data)
     const nickname = window.location.href.split("/")[4]
-    fetch(`https://localhost:7041/api/Nickname?nickname=${nickname}&key=${process.env.REACT_APP_API_KEY}`)
+    fetch(`https://yze-bio-production.up.railway.app/api/Nickname?nickname=${nickname}&key=${process.env.REACT_APP_API_KEY}`)
     .then(res => res.json())
     .then(data => {
         if(data.status !== 400 && data.status !== 404){
@@ -92,12 +92,12 @@ const Customize = (props) => {
     document.title = "Editing card" ;
     const username = window.localStorage.getItem("username")
     const hash = window.localStorage.getItem("hash")
-    fetch(`https://localhost:7041/api/Verification?username=${username}&hash=${hash}&key=${process.env.REACT_APP_API_KEY}`)
+    fetch(`https://yze-bio-production.up.railway.app/api/Verification?username=${username}&hash=${hash}&key=${process.env.REACT_APP_API_KEY}`)
     .then(res => {
       if(res.status === 401) return window.location.href = "/login"
   })
   .then(() => {
-      fetch(`https://localhost:7041/api/Account/GetId/${username}?key=${process.env.REACT_APP_API_KEY}`)
+      fetch(`https://yze-bio-production.up.railway.app/api/Account/GetId/${username}?key=${process.env.REACT_APP_API_KEY}`)
       .then(res => res.json())
       .then(data => {
           if(data === -1){
@@ -175,7 +175,7 @@ const Customize = (props) => {
       return setAlert(true)
     }
 
-    fetch(`https://localhost:7041/api/UserExists/${nickname}`)
+    fetch(`https://yze-bio-production.up.railway.app/api/UserExists/${nickname}`)
     .then(res => res.json())
     .then(data => {
       if(data) {
@@ -220,7 +220,7 @@ const Customize = (props) => {
 
   const createCard = (body) => {
     console.log(body)
-    fetch(`https://localhost:7041/api/User?key=${process.env.REACT_APP_API_KEY}`, {
+    fetch(`https://yze-bio-production.up.railway.app/api/User?key=${process.env.REACT_APP_API_KEY}`, {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -240,7 +240,7 @@ const Customize = (props) => {
   }
 
   const editCard = (body) => {
-    fetch(`https://localhost:7041/api/User/${nickname}?key=${process.env.REACT_APP_API_KEY}`, {
+    fetch(`https://yze-bio-production.up.railway.app/api/User/${nickname}?key=${process.env.REACT_APP_API_KEY}`, {
       headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'

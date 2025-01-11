@@ -16,12 +16,12 @@ const Manage = () => {
 
         if(username === null) return window.location.href = "/login"
 
-        fetch(`https://localhost:7041/api/Verification?username=${username}&hash=${hash}&key=${process.env.REACT_APP_API_KEY}`)
+        fetch(`https://yze-bio-production.up.railway.app/api/Verification?username=${username}&hash=${hash}&key=${process.env.REACT_APP_API_KEY}`)
         .then(res => {
             if(res.status === 401) return window.location.href = "/login"
         })
         .then(() => {
-            fetch(`https://localhost:7041/api/Projects/${username}?key=${process.env.REACT_APP_API_KEY}`)
+            fetch(`https://yze-bio-production.up.railway.app/api/Projects/${username}?key=${process.env.REACT_APP_API_KEY}`)
             .then(res => res.json())
             .then(data => {
                 setCards(data.users);
@@ -36,7 +36,7 @@ const Manage = () => {
         updatedCards.splice(index, 1); 
         setCards(updatedCards); 
         
-        fetch(`https://localhost:7041/api/User/${nickname}?key=${process.env.REACT_APP_API_KEY}`, {
+        fetch(`https://yze-bio-production.up.railway.app/api/User/${nickname}?key=${process.env.REACT_APP_API_KEY}`, {
             method: 'DELETE',
             headers: {
                 "Content-Type": "application/json"

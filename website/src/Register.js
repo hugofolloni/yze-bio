@@ -11,7 +11,7 @@ const Register = () => {
     const [errorMessage, setErrorMessage] = useState("")
 
     const saveAccount = () => {
-        fetch(`https://localhost:7041/api/Account?key=${process.env.REACT_APP_API_KEY}`, {
+        fetch(`https://yze-bio-production.up.railway.app/api/Account?key=${process.env.REACT_APP_API_KEY}`, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -39,7 +39,7 @@ const Register = () => {
         if(!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(email)){
             return setErrorMessage("You have to set a valid email!")
         }
-        fetch(`https://localhost:7041/api/AccountExists/${username},${email}`)
+        fetch(`https://yze-bio-production.up.railway.app/api/AccountExists/${username},${email}`)
         .then(res => res.json())
         .then(exists => {
             console.log(exists)
