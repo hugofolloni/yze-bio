@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(options =>
 {
   options.AddPolicy(name: MyAllowSpecificOrigins,
-     builder => builder.WithOrigins("https://yze-bio.netlify.app") // Adjust origins as needed
+     builder => builder.WithOrigins("https://yze-bio.netlify.app", "https://yze.bio", "https://localhost:3000") // Adjust origins as needed
                            .AllowAnyMethod() // Or explicitly list PATCH
                            .AllowAnyHeader()
   );
