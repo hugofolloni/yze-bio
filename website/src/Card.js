@@ -7,7 +7,7 @@ import { Fade } from "react-awesome-reveal";
 
 const Card = () => {
 
-    const username = window.location.href.split('3000/')[1].toLowerCase()
+    const username = window.location.href.split('.app/')[1].toLowerCase()
 
     const [data, setData] = useState({status: 999})
     const [pageBackgroundColor, setPageBackgroundColor] = useState("#eaeaea")
