@@ -799,7 +799,7 @@ a {
   flex-flow: column-reverse wrap-reverse;
 }
 
-.card-wrapper {
+.card-wrapper, .edit-card-wrapper  {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -1501,11 +1501,29 @@ a {
     width: 90%;
     align-items: center;
     height: 10vh;
-    margin-top: 3vh;
+    margin-top: 1vh;
+    /* position: relative; */
+  }
+
+  .card-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
   }
 
   .creating-card-div, .editing-card-div {
-    top: 15vh;
+    top: 12vh;
+    width: 90vw;
+  }
+
+  .creating-card-div h4, .editing-card-div h4 {
+    font-size: 12px;
+    width: 25%;
+    margin-right: 10px;
+  } 
+
+  .creating-card-div input, .editing-card-div input {
+    width: 40%;
   }
 
   .songs-showcase, .interest-chooser {

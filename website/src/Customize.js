@@ -336,7 +336,7 @@ const Customize = (props) => {
   }
 
   return (  
-    <div className="card-wrapper" style={{backgroundColor: palette[0], fontFamily: fontFamily}}>
+    <div className="edit-card-wrapper" style={{backgroundColor: palette[0], fontFamily: fontFamily}}>
 { showLayout && (
     <div className="card-wrapper" >
       <div className="showcases">
@@ -352,19 +352,7 @@ const Customize = (props) => {
           <PaletteSpan palette={palette}>Pick the style</PaletteSpan>
         </div>
       </div>
-      {!props.edit && (
-      <div className="creating-card-div" style={{backgroundColor: palette[1]}}>
-        <h4 style={{fontFamily: fontFamily}}>Name your page:</h4>
-        <FocusInput palette={palette} className='naming-page' style={{ color: palette[3], backgroundColor: palette[1], borderBottomColor: palette[2]}} type="text"  placeholder="Your card name" value={nickname} onChange={(e) => setNickname(e.target.value)} />
-        <CreateButton palette={palette} style={{fontFamily: fontFamily}} className="create-button" onClick={() => pushCard()}>Create</CreateButton>
-      </div>)}
 
-      {props.edit && (
-      <div className="editing-card-div" style={{backgroundColor: palette[1]}}>
-        <h4 style={{fontFamily: fontFamily}}>Your page:</h4>
-        <h4 style={{fontFamily: fontFamily}}>{nickname}</h4>
-        <CreateButton palette={palette} style={{fontFamily: fontFamily}} className="create-button" onClick={() => pushCard()}>Finish</CreateButton>
-      </div>)}
 
       <div className='edit-card-div'>
         <div style={{backgroundColor: palette[1], borderRadius: `${borderRadius}px`}} className='layout-styled'>
@@ -546,7 +534,7 @@ const Customize = (props) => {
       { songPicker && (
          <div className="songs-showcase" style={{backgroundColor: palette[1]}}>
             <div className='links-input'>
-              <FocusInput palette={palette} className='link-url' onKeyDown={(e) => {if(e.key === "Enter"){searchSong()}}} style={{color: palette[3], backgroundColor: palette[1], borderBottomColor: palette[0]}} type="text"  placeholder="Song ID" value={songText} onChange={(e) => setSongText(e.target.value)}/>
+              <FocusInput palette={palette} className='link-url' onKeyDown={(e) => {if(e.key === "Enter"){searchSong()}}} style={{color: palette[3], backgroundColor: palette[1], borderBottomColor: palette[0]}} type="text"  placeholder="Search a song" value={songText} onChange={(e) => setSongText(e.target.value)}/>
               <CreateButton palette={palette} style={{marginTop: '10px'}} className="create-button" onClick={() => searchSong()}>Search</CreateButton>
             </div>
             <div className="songs-area">
@@ -563,6 +551,19 @@ const Customize = (props) => {
         </div>
       )}
 
+    {!props.edit && (
+      <div className="creating-card-div" style={{backgroundColor: palette[1]}}>
+        <h4 style={{fontFamily: fontFamily}}>Name your page:</h4>
+        <FocusInput palette={palette} className='naming-page' style={{ color: palette[3], backgroundColor: palette[1], borderBottomColor: palette[2]}} type="text"  placeholder="Your card name" value={nickname} onChange={(e) => setNickname(e.target.value)} />
+        <CreateButton palette={palette} style={{fontFamily: fontFamily}} className="create-button" onClick={() => pushCard()}>Create</CreateButton>
+      </div>)}
+
+      {props.edit && (
+      <div className="editing-card-div" style={{backgroundColor: palette[1]}}>
+        <h4 style={{fontFamily: fontFamily}}>Your page:</h4>
+        <h4 style={{fontFamily: fontFamily}}>{nickname}</h4>
+        <CreateButton palette={palette} style={{fontFamily: fontFamily}} className="create-button" onClick={() => pushCard()}>Finish</CreateButton>
+      </div>)}
       
     { gifPicker && (
        <div className="songs-showcase" style={{backgroundColor: palette[1]}}>
