@@ -32,7 +32,7 @@ const Manage = () => {
 
 
     const handleDelete = (nickname, index) => {
-        const updatedCards = [...cards]; 
+        const updatedCards = [...cards].reverse(); 
         updatedCards.splice(index, 1); 
         setCards(updatedCards); 
         
@@ -66,7 +66,7 @@ const Manage = () => {
                                 <span className="nickname" style={{fontWeight: '500', color: item.layout.fontColor, padding: '5px'}}>yze.bio/{item.nickname}</span>
                             </div>
                             <div className="manage-card-buttons">
-                                <div className="delete-card" onClick={() => { setShowDeleteAlert(true); setDeleteNick(item.title); setDeleteIndex(index);}}>Delete</div>
+                                <div className="delete-card" onClick={() => { setShowDeleteAlert(true); setDeleteNick(item.nickname); setDeleteIndex(index);}}>Delete</div>
                                 <a className="edit-button" href={`/edit/${item.nickname}`}>Edit</a>
                             </div>
                         </div>

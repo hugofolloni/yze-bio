@@ -526,7 +526,7 @@ const Customize = (props) => {
       { alert && (
         <div className="alert-box" style={{backgroundColor: palette[3]}}>
           <span style={{color: palette[0]}}>{alertText}</span>
-          <button style={{backgroundColor: palette[2]}} onClick={() => setAlert(false)}>Got it</button>
+          <button style={{backgroundColor: palette[0], color: palette[2]}} onClick={() => setAlert(false)}>Got it</button>
         </div>
       )}
 
