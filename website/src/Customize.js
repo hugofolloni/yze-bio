@@ -81,6 +81,7 @@ const Customize = (props) => {
             setPalette([data.layout.pageBackgroundColor, data.layout.cardBackgroundColor, data.layout.titleColor, data.layout.fontColor])
             setBorderRadius(data.layout.borderRadius)
             setPaletteShowcase(false)
+            setSelectedHobbies(data.interests)
         }   
         else{
             console.log("NOT FOUND")

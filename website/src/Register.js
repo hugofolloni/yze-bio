@@ -45,8 +45,7 @@ const Register = () => {
             console.log(exists)
             if(exists){
                 return setErrorMessage("This username or email already exists!")
-            }
-            else {
+            } else {
                 return saveAccount()
             }
         });
@@ -59,7 +58,7 @@ const Register = () => {
                 <span className='form-title'>Create your account</span>
                 <div className="input-fields-wrapper">
                     <span>Username</span>
-                    <input required type="text" placeholder='Your account username' value={username} onChange={(e) => setUsername(e.target.value)}/>
+                    <input required type="text" minLength={4} placeholder='Your account username' value={username} onChange={(e) => setUsername(e.target.value)}/>
                 </div>
                 <div className="input-fields-wrapper">
                     <span>Email</span>
