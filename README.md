@@ -12,7 +12,7 @@ The platform focuses on simplicity and user-friendliness, allowing individuals t
 ## Table of Contents
 
 1. [Technologies Used](#technologies-used)
-2. [User Story](#api-endpoints)
+2. [User Story](#user-story)
 3. [Screenshots](#screenshots)
 4. [Getting Started](#getting-started)
 5. [Contribution](#contribution)
@@ -70,14 +70,15 @@ Ensure you have the following installed:
     git clone https://github.com/your-username/yze-bio.git
     ```
 2. **Front-end**:
-    - Change the API connections to localhost
+    - Change the API connections to localhost.
+    - Setup .env infos to real ones.
     ```bash
     cd yze-bio/website
     npm i
     npm start
     ```
 3. **Back-end**:
-    - Generate a PostgreSQL database and update the information in the `appsettings.json` file inside the `Server` folder.
+    - Generate a PostgreSQL database and update the information "ConnectionStrings__DefaultConnection" in the `appsettings.json` file inside the `Server` folder. Also, add a key to "ApiSettings__ApiKey".
     - Run the table creation scripts available in the `setup.sql` file inside the `server/api` folder.
     ```bash
     cd yze-bio/Server
