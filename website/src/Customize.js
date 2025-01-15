@@ -4,7 +4,7 @@ import styled from "styled-components"
 import Add from "@mui/icons-material/Add";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXTwitter, faGithub, faInstagram, faTiktok, faDiscord, faSquareLastfm, faSteam, faPinterest, faLetterboxd, faTwitch, faSpotify, faYoutube, faTumblr, faReddit } from '@fortawesome/free-brands-svg-icons';
-import { faX } from '@fortawesome/free-solid-svg-icons'
+import { faX, faLink } from '@fortawesome/free-solid-svg-icons'
 import { getTrackInfo, getToken } from "./Utils";
 
 const FocusInput = styled.input`
@@ -69,6 +69,7 @@ const Customize = (props) => {
             if(data.accountId !== currentAccount){
               return window.location.href = "/manage"
             }
+            console.log(data)
             setTitle(data.title)
             setSubtitle(data.subtitle)
             setDescription(data.description)
@@ -82,6 +83,7 @@ const Customize = (props) => {
             setBorderRadius(data.layout.borderRadius)
             setPaletteShowcase(false)
             setSelectedHobbies(data.interests)
+            setFontFamily(data.layout.fontFamily)
         }   
         else{
             console.log("NOT FOUND")
@@ -313,23 +315,21 @@ const Customize = (props) => {
     }
     console.log('infos:', link)
     if(searchLink.placeholder === "URL" && newLinkUrl.indexOf("http") === -1){
-
       link = generateSocialLink(searchLink.type, newLinkUrl)
     }
 
     if(editingIndex === -1) {
       setLinks([...links, {type: searchLink.type, value: link, action: action}]); 
-      setAddingLink(false); 
-      setEditingIndex(-1)
       console.log([...links, {type: searchLink.type, value: link, action: action}]);
     }
     else {
       var currentLinks = links; 
       currentLinks[editingIndex] = {type: searchLink.type, value: link, action: action}; 
       setLinks(currentLinks);  
-      setEditingIndex(-1); 
-      setAddingLink(false);
     }
+    setEditingIndex(-1); 
+    setAddingLink(false);
+    setNewLinkUrl("")
 
     console.log([...links, {type: searchLink.type, value: link, action: action}]);
 
@@ -355,11 +355,11 @@ const Customize = (props) => {
 
 
       <div className='edit-card-div'>
-        <div style={{backgroundColor: palette[1], borderRadius: `${borderRadius}px`}} className='layout-styled'>
+        <div style={{backgroundColor: palette[1], borderRadius: `${borderRadius}px`, fontFamily: fontFamily}} className='layout-styled'>
 
-            <FocusInput palette={palette} className='card-title-input' style={{color: palette[2],   backgroundColor: palette[1]}} placeholder="Your title" maxLength='16' value={title} onChange={(e) => setTitle(e.target.value)} onClick={() => {if(title === "Your title") setTitle("")}} onBlur={() => {if(title === "") setTitle("Your title")}}/>
-            <FocusInput palette={palette} className='card-subtitle-input'  style={{color: palette[3],  backgroundColor: palette[1]}} placeholder="Subtitle"  maxLength='40' value={subtitle} onChange={(e) => setSubtitle(e.target.value)} onClick={() => {if(subtitle === "Subtitle") setSubtitle("")}} onBlur={() => {if(subtitle === "") setSubtitle("Subtitle")}} />
-            <TextAreaInput palette={palette} className='card-description-input' style={{color: palette[3],  backgroundColor: palette[1]}} placeholder="Description"  maxLength='250'  value={description} onChange={(e) => setDescription(e.target.value)} onClick={() => {if(description === "Description") setDescription("")}} onBlur={() => {if(description === "") setDescription("Description")}}/>
+            <FocusInput palette={palette} className='card-title-input' style={{color: palette[2],   backgroundColor: palette[1], fontFamily: fontFamily}} placeholder="Your title" maxLength='16' value={title} onChange={(e) => setTitle(e.target.value)} onClick={() => {if(title === "Your title") setTitle("")}} onBlur={() => {if(title === "") setTitle("Your title")}}/>
+            <FocusInput palette={palette} className='card-subtitle-input'  style={{color: palette[3],  backgroundColor: palette[1], fontFamily: fontFamily}} placeholder="Subtitle"  maxLength='40' value={subtitle} onChange={(e) => setSubtitle(e.target.value)} onClick={() => {if(subtitle === "Subtitle") setSubtitle("")}} onBlur={() => {if(subtitle === "") setSubtitle("Subtitle")}} />
+            <TextAreaInput palette={palette} className='card-description-input' style={{color: palette[3],  backgroundColor: palette[1], fontFamily: fontFamily}} placeholder="Description"  maxLength='250'  value={description} onChange={(e) => setDescription(e.target.value)} onClick={() => {if(description === "Description") setDescription("")}} onBlur={() => {if(description === "") setDescription("Description")}}/>
 
             <div className='interest-wrapper'>  
               { (selectedHobbies.length !== 0 && ( selectedHobbies.map((item) => (
@@ -370,7 +370,7 @@ const Customize = (props) => {
                 ||
                 <span className="interest-calling" style={{color: palette[3]}}>Interests</span>
               }
-              { selectedHobbies.length < 6 && (
+              { selectedHobbies.length < 9 && (
                 <div className="adder">
                   <Add onClick={() => setInterestChooser(true)} />
                 </div>
@@ -423,6 +423,7 @@ const Customize = (props) => {
                       {item.type === 'youtube' && <FontAwesomeIcon icon={faYoutube} size="2x" color={palette[3]}className='icon' />}
                       {item.type === 'tumblr' && <FontAwesomeIcon icon={faTumblr} size="2x" color={palette[3]}className='icon' />}
                       {item.type === 'reddit' && <FontAwesomeIcon icon={faReddit} size="2x" color={palette[3]}className='icon' />}
+                      {item.type === 'site' && <FontAwesomeIcon icon={faLink} size="2x" color={palette[3]}className='icon' />}          
                   </div>
                 )))
                 ||
@@ -433,7 +434,7 @@ const Customize = (props) => {
                       </div>
                     </div>
               }
-                { links.length < 6 && links.length > 0 && (
+                { links.length < 9 && links.length > 0 && (
                   <div className="adder">
                     <Add onClick={() => setAddingLink(true)} />
                   </div>
@@ -600,7 +601,8 @@ const Customize = (props) => {
                     {searchLink.type === 'spotify' && <FontAwesomeIcon icon={faSpotify} size="2x" color={palette[1]}className='icon' />}
                     {searchLink.type === 'youtube' && <FontAwesomeIcon icon={faYoutube} size="2x" color={palette[1]}className='icon' />}
                     {searchLink.type === 'tumblr' && <FontAwesomeIcon icon={faTumblr} size="2x" color={palette[1]}className='icon' />}
-                    {searchLink.type === 'reddit' && <FontAwesomeIcon icon={faReddit} size="2x" color={palette[1]}className='icon' />}              
+                    {searchLink.type === 'reddit' && <FontAwesomeIcon icon={faReddit} size="2x" color={palette[1]}className='icon' />}     
+                    {searchLink.type === 'site' && <FontAwesomeIcon icon={faLink} size="2x" color={palette[1]}className='icon' />}     
                     <span style={{color: palette[1], fontWeight: 700}}>
                       {searchLink.label}
                     </span>
@@ -624,7 +626,8 @@ const Customize = (props) => {
                     {item.type === 'spotify' && <FontAwesomeIcon icon={faSpotify} size="2x" color={palette[3]}className='icon' />}
                     {item.type === 'youtube' && <FontAwesomeIcon icon={faYoutube} size="2x" color={palette[3]}className='icon' />}
                     {item.type === 'tumblr' && <FontAwesomeIcon icon={faTumblr} size="2x" color={palette[3]}className='icon' />}
-                    {item.type === 'reddit' && <FontAwesomeIcon icon={faReddit} size="2x" color={palette[3]}className='icon' />}              
+                    {item.type === 'reddit' && <FontAwesomeIcon icon={faReddit} size="2x" color={palette[3]}className='icon' />}         
+                    {item.type === 'site' && <FontAwesomeIcon icon={faLink} size="2x" color={palette[3]}className='icon' />}          
                     <span style={{color: palette[3], fontWeight: 700}}>                      
                       {item.label}
                     </span>
@@ -640,7 +643,7 @@ const Customize = (props) => {
     )}
 
       { (interestChooser || paletteShowcase || addingLink || alert || songPicker || gifPicker || styleShowcase) && (
-        <div className="translucent-background" onClick={() => {setInterestChooser(false); setPaletteShowcase(false); setStyleShowcase(false); setAddingLink(false); setAlert(false); setSongPicker(false); setGifPicker(false);}}/>
+        <div className="translucent-background" onClick={() => {setInterestChooser(false); setPaletteShowcase(false); setStyleShowcase(false); setAddingLink(false); setAlert(false); setSongPicker(false); setGifPicker(false); setNewLinkUrl("")}}/>
       )}
       </div>
     )}

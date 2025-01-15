@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Curtain from './Curtain';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXTwitter, faGithub, faInstagram, faTiktok, faDiscord, faSquareLastfm, faSteam, faPinterest, faLetterboxd, faTwitch, faSpotify, faYoutube, faTumblr, faReddit } from '@fortawesome/free-brands-svg-icons';
+import { faLink } from '@fortawesome/free-solid-svg-icons'
 import { Fade } from "react-awesome-reveal";
 
 
@@ -100,6 +101,7 @@ const Basic = (props) => {
                                 {item.type === 'youtube' && <FontAwesomeIcon icon={faYoutube} size="2x" color="white" className='icon' />}
                                 {item.type === 'tumblr' && <FontAwesomeIcon icon={faTumblr} size="2x" color="white" className='icon' />}
                                 {item.type === 'reddit' && <FontAwesomeIcon icon={faReddit} size="2x" color="white" className='icon' />}
+                                {item.type === 'site' && <FontAwesomeIcon icon={faLink} size="2x" color="white" className='icon' />}
                             </a>
                         )
                     else return (

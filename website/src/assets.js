@@ -417,7 +417,8 @@ const availableLinks = [
   { type: 'spotify', label: 'Spotify', placeholder: 'URL' },
   { type: 'youtube', label: 'YouTube', placeholder: 'URL' },
   { type: 'tumblr', label: 'Tumblr', placeholder: 'URL' },
-  { type: 'reddit', label: 'Reddit', placeholder: 'URL' }
+  { type: 'reddit', label: 'Reddit', placeholder: 'URL' },
+  { type: 'site', label: 'Site', placeholder: 'URL'}
 ];
 
 export { hobbies, colors, fonts, borders, availableLinks }
