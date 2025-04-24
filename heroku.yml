@@ -1,0 +1,5 @@
+build:
+  docker:
+    web: Server/Dockerfile
+run:
+  web: docker run -p $PORT yze-bio-api

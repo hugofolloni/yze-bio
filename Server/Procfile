@@ -1,0 +1,1 @@
+web: docker run -p $PORT yze-bio-api
