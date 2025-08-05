@@ -63,11 +63,11 @@ const Basic = (props) => {
             <div className='layout-styled' style={{ backgroundColor: props.data.layout.cardBackgroundColor, borderRadius: `${props.data.layout.borderRadius}px`}}>
                 <span className='card-title' style={{color: props.data.layout.titleColor}}>{props.data.title}</span>
                 <span className='card-subtitle' style={{ color: props.data.layout.fontColor }}>{props.data.subtitle}</span>
-                <span className='card-description' style={{ color: props.data.layout.fontColor}}>{props.data.description}</span>
+                <DescriptionWithMentions text={props.data.description} color={props.data.layout.fontColor} />
 
                 <div className='interest-wrapper'>                
                     { props.data.interests !== null && ( props.data.interests.map(item => (
-                        <span className='interest-span' style={{backgroundColor: props.data.layout.pageBackgroundColor }}>{item.emoji} {item.interest}</span>
+                        <span className='interest-span' style={{backgroundColor: props.data.layout.pageBackgroundColor, color: props.data.layout.fontColor }}>{item.emoji} {item.interest}</span>
                     )))}
                 </div>
 
@@ -140,6 +140,26 @@ const Basic = (props) => {
         </div>
     );
 }
+
+const DescriptionWithMentions = ({ text, color }) => {
+  const mentionRegex = /(@\w+)/g;
+
+  const parts = text.split(mentionRegex);
+
+  return (
+    <span className='card-description' style={{ color: color }}>
+      {parts.map((part, index) => {
+        if (mentionRegex.test(part)) {
+          const username = part.substring(1);
+          return (
+            <a  key={index} href={`/${username}`} style={{ fontWeight: 'bold', cursor: 'pointer',  textDecoration: 'none' }}>{part}</a>
+          );
+        }
+        return part;
+      })}
+    </span>
+  );
+};
 
 
 export default Card;

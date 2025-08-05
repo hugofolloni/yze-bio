@@ -1,132 +1,142 @@
+// Lista de hobbies completa, com as novas adições comentadas com "// Novo"
 const hobbies = [
   { "interest": 'Acting', "emoji": '🎭' },
+  { "interest": 'Anime & Manga', "emoji": '🍥' },
+  { "interest": 'Aphex Twin', "emoji": '🎛️' }, // Novo
   { "interest": 'Archery', "emoji": '🏹' },
   { "interest": 'Astronomy', "emoji": '🔭' },
   { "interest": 'Baking', "emoji": '🥖' },
   { "interest": 'Basketball', "emoji": '🏀' },
-  { "interest": 'Biking', "emoji": '🚴' },
   { "interest": 'Bingewatching', "emoji": '📺' },
   { "interest": 'Birdwatching', "emoji": '🐦' },
+  { "interest": 'Björk', "emoji": '🦢' }, // Novo
+  { "interest": 'Bladee', "emoji": 'drain' }, // Novo
   { "interest": 'Blogging', "emoji": '📝' },
   { "interest": 'Blues Music', "emoji": '🎵' },
   { "interest": 'Board Games', "emoji": '🎲' },
   { "interest": 'Book Club', "emoji": '📚' },
+  { "interest": 'Bouldering', "emoji": '🧗‍♀️' },
   { "interest": 'Bowling', "emoji": '🎳' },
   { "interest": 'Camping', "emoji": '🏕️' },
   { "interest": 'Candle Making', "emoji": '🕯️' },
   { "interest": 'Card Games', "emoji": '🃏' },
+  { "interest": 'Cars/Gearheading', "emoji": '🚗' },
   { "interest": 'Ceramics', "emoji": '🏺' },
   { "interest": 'Chess', "emoji": '♟️' },
   { "interest": 'Classical Music', "emoji": '🎻' },
-  { "interest": 'Collecting', "emoji": '🗃️' },
   { "interest": 'Coding', "emoji": '💻' },
+  { "interest": 'Collecting', "emoji": '🗃️' },
   { "interest": 'Coin Collecting', "emoji": '🪙' },
-  { "interest": 'Comedy Movies', "emoji": '🎬' },
   { "interest": 'Comedy', "emoji": '🎙️' },
   { "interest": 'Cooking', "emoji": '🍳' },
+  { "interest": 'Cosplay', "emoji": '🦸' },
+  { "interest": 'Cottagecore', "emoji": '🧺' }, // Novo
+  { "interest": 'Country Music', "emoji": '🎵' },
   { "interest": 'Crafts', "emoji": '🎨' },
   { "interest": 'Crocheting', "emoji": '🧶' },
+  { "interest": 'Cyberpunk', "emoji": '🤖' }, // Novo
   { "interest": 'Cycling', "emoji": '🚴' },
   { "interest": 'Dancing', "emoji": '💃' },
+  { "interest": 'Dark Academia', "emoji": '📜' }, // Novo
   { "interest": 'Diving', "emoji": '🤿' },
+  { "interest": 'Documentaries', "emoji": '🎬' },
   { "interest": 'Drawing', "emoji": '✏️' },
-  { "interest": 'Drama Movies', "emoji": '🎬' },
+  { "interest": 'Electronic Music', "emoji": '🎵' },
   { "interest": 'Embroidery', "emoji": '🪡' },
-  { "interest": 'Fantasy Movies', "emoji": '🎬' },
+  { "interest": 'Emo', "emoji": '🖤' }, // Novo
   { "interest": 'Fashion', "emoji": '👗' },
+  { "interest": 'Filmes da A24', "emoji": '📽️' }, // Novo
   { "interest": 'Fishing', "emoji": '🎣' },
   { "interest": 'Flower Arranging', "emoji": '💐' },
   { "interest": 'Gaming', "emoji": '🕹️' },
   { "interest": 'Gardening', "emoji": '🌱' },
   { "interest": 'Genealogy', "emoji": '🧬' },
   { "interest": 'Golf', "emoji": '⛳' },
+  { "interest": 'Goth / Gótico', "emoji": '🦇' }, // Novo
+  { "interest": 'Grimes', "emoji": '👽' }, // Novo
   { "interest": 'Guitar', "emoji": '🎸' },
+  { "interest": 'Hardcore', "emoji": '🗣️' }, // Novo
   { "interest": 'Hiking', "emoji": '🥾' },
   { "interest": 'Hip Hop', "emoji": '💃' },
   { "interest": 'Home Brewing', "emoji": '🍺' },
   { "interest": 'Horseback Riding', "emoji": '🐎' },
-  { "interest": 'Horror Movies', "emoji": '🎬' },
   { "interest": 'Hunting', "emoji": '🏹' },
   { "interest": 'Ice Skating', "emoji": '⛸️' },
   { "interest": 'Jazz Music', "emoji": '🎷' },
   { "interest": 'Jewelry Making', "emoji": '💍' },
+  { "interest": 'Jogos de Ritmo', "emoji": ' ритм' }, // Novo
   { "interest": 'Journaling', "emoji": '📓' },
   { "interest": 'Juggling', "emoji": '🤹' },
+  { "interest": 'K-Pop', "emoji": '🎶' },
   { "interest": 'Karaoke', "emoji": '🎤' },
   { "interest": 'Kayaking', "emoji": '🛶' },
   { "interest": 'Knitting', "emoji": '🧵' },
   { "interest": 'Lego Building', "emoji": '🧱' },
+  { "interest": 'Lo-fi', "emoji": '🎧' }, // Novo
   { "interest": 'Martial Arts', "emoji": '🥋' },
   { "interest": 'Meditation', "emoji": '🧘‍♂️' },
   { "interest": 'Metal Detecting', "emoji": '🔍' },
+  { "interest": 'Metal Music', "emoji": '🎸' },
+  { "interest": 'Metalcore', "emoji": '🤘' }, // Novo
+  { "interest": 'Mixology', "emoji": '🍸' },
   { "interest": 'Model Building', "emoji": '✈️' },
   { "interest": 'Mountain Climbing', "emoji": '🧗' },
   { "interest": 'Movie Watching', "emoji": '🎬' },
-  { "interest": 'Mystery Movies', "emoji": '🎬' },
   { "interest": 'Origami', "emoji": '📄' },
   { "interest": 'Painting', "emoji": '🎨' },
   { "interest": 'Piano', "emoji": '🎹' },
   { "interest": 'Photography', "emoji": '📸' },
-  { "interest": 'Ping Pong', "emoji": '🏓' },
   { "interest": 'Podcasting', "emoji": '🎙️' },
+  { "interest": 'Poetry', "emoji": '📖' },
   { "interest": 'Pop Music', "emoji": '🎵' },
+  { "interest": 'Pop Punk', "emoji": '🎤' }, // Novo
+  { "interest": 'Post-Punk', "emoji": '🎶' }, // Novo
   { "interest": 'Pottery', "emoji": '🏺' },
   { "interest": 'Puzzles', "emoji": '🧩' },
   { "interest": 'Reading', "emoji": '📚' },
   { "interest": 'Reggae Music', "emoji": '🎵' },
   { "interest": 'Rock Climbing', "emoji": '🧗' },
+  { "interest": 'Rock Music', "emoji": '🎸' },
   { "interest": 'Running', "emoji": '🏃' },
   { "interest": 'Sailing', "emoji": '⛵' },
+  { "interest": 'Sci-fi', "emoji": '🚀' },
   { "interest": 'Scrapbooking', "emoji": '📒' },
   { "interest": 'Scuba Diving', "emoji": '🤿' },
   { "interest": 'Sewing', "emoji": '🧵' },
+  { "interest": 'Shoegaze', "emoji": '🎸' }, // Novo
   { "interest": 'Singing', "emoji": '🎤' },
+  { "interest": 'Sintetizadores', "emoji": '🎹' }, // Novo
   { "interest": 'Skateboarding', "emoji": '🛹' },
   { "interest": 'Skiing', "emoji": '⛷️' },
   { "interest": 'Snowboarding', "emoji": '🏂' },
   { "interest": 'Soap Making', "emoji": '🧼' },
   { "interest": 'Soccer', "emoji": '⚽' },
+  { "interest": 'Soul Music', "emoji": '🎵' },
+  { "interest": 'Speedrunning', "emoji": '⏩' }, // Novo
   { "interest": 'Stargazing', "emoji": '🌌' },
+  { "interest": 'Streetwear', "emoji": '👟' }, // Novo
   { "interest": 'Surfing', "emoji": '🏄' },
   { "interest": 'Swimming', "emoji": '🏊' },
+  { "interest": 'Synthwave', "emoji": '🌆' }, // Novo
   { "interest": 'Table Tennis', "emoji": '🏓' },
   { "interest": 'Tennis', "emoji": '🎾' },
   { "interest": 'Theater', "emoji": '🎭' },
+  { "interest": 'Thrifting', "emoji": '🛍️' },
   { "interest": 'Traveling', "emoji": '✈️' },
+  { "interest": 'True Crime', "emoji": '🕵️‍♀️' }, // Novo
   { "interest": 'Video Editing', "emoji": '🎬' },
   { "interest": 'Violin', "emoji": '🎻' },
-  { "interest": 'Volleyball', "emoji": '🏐' },
   { "interest": 'Vlogging', "emoji": '📹' },
+  { "interest": 'Volleyball', "emoji": '🏐' },
   { "interest": 'Watching Sports', "emoji": '🏅' },
+  { "interest": 'Webtoons & Manhwas', "emoji": '📱' }, // Novo
   { "interest": 'Weightlifting', "emoji": '🏋️' },
   { "interest": 'Wine Tasting', "emoji": '🍷' },
   { "interest": 'Woodworking', "emoji": '🪚' },
+  { "interest": 'World Music', "emoji": '🌍' },
   { "interest": 'Writing', "emoji": '✍️' },
   { "interest": 'Yoga', "emoji": '🧘' },
-  { "interest": 'Adventure Movies', "emoji": '🎬' },
-  { "interest": 'Animation Movies', "emoji": '🎬' },
-  { "interest": 'Country Music', "emoji": '🎵' },
-  { "interest": 'Documentary Movies', "emoji": '🎬' },
-  { "interest": 'Electronic Music', "emoji": '🎵' },
-  { "interest": 'Fantasy Books', "emoji": '📚' },
-  { "interest": 'Horror Books', "emoji": '📚' },
-  { "interest": 'Jazz Music', "emoji": '🎷' },
-  { "interest": 'Metal Music', "emoji": '🎸' },
-  { "interest": 'Non-fiction Books', "emoji": '📚' },
-  { "interest": 'Painting', "emoji": '🎨' },
-  { "interest": 'Photography', "emoji": '📸' },
-  { "interest": 'Poetry', "emoji": '📖' },
-  { "interest": 'Pop Music', "emoji": '🎵' },
-  { "interest": 'Reggae Music', "emoji": '🎵' },
-  { "interest": 'Rock Music', "emoji": '🎸' },
-  { "interest": 'Romance Books', "emoji": '📚' },
-  { "interest": 'Sci-fi Books', "emoji": '📚' },
-  { "interest": 'Sci-fi Movies', "emoji": '🎬' },
-  { "interest": 'Short Stories', "emoji": '📖' },
-  { "interest": 'Soul Music', "emoji": '🎵' },
-  { "interest": 'Thriller Books', "emoji": '📚' },
-  { "interest": 'Thriller Movies', "emoji": '🎬' },
-  { "interest": 'World Music', "emoji": '🌍' },
+  { "interest": 'Zine Making', "emoji": '📖' }, // Novo
   { "interest": 'Zumba', "emoji": '💃' }
 ];
 
@@ -165,7 +175,15 @@ const colors = [
     "pageBackgroundColor": "#e8e8a6",
     "fontColor": "#444444",
     "titleColor": "#556b2f"
-  },{
+  },
+  { // New Pastel Theme
+    "name": "Pastel Dream",
+    "cardBackgroundColor": "#E3D0D8",
+    "pageBackgroundColor": "#F5E6E8",
+    "fontColor": "#5D5C61",
+    "titleColor": "#7395AE"
+  },
+  {
     "name": "Gotham",
     "cardBackgroundColor": "#000000",
     "pageBackgroundColor": "#000000",
@@ -199,6 +217,13 @@ const colors = [
     "pageBackgroundColor": "#5e3370",
     "fontColor": "#ffffff",
     "titleColor": "#ecf0f1"
+  },
+  { // New Pastel Theme
+    "name": "Mint Sorbet",
+    "cardBackgroundColor": "#C8E6C9",
+    "pageBackgroundColor": "#E0F2E9",
+    "fontColor": "#4E4E4E",
+    "titleColor": "#FFAAA5"
   },
   {
     "name": "Ocean Depths",
@@ -244,10 +269,17 @@ const colors = [
   },
   {
     "name": "Pink Passion",
-    "cardBackgroundColor": "#fd79a8",
-    "pageBackgroundColor": "#e84393",
+    "cardBackgroundColor": "#f6358a",
+    "pageBackgroundColor": "#ff007f",
     "fontColor": "#ffffff",
-    "titleColor": "#6c5ce7"
+    "titleColor": "#000000"
+  },
+  { // New Pastel Theme
+    "name": "Powder Blue",
+    "cardBackgroundColor": "#D4E7E7",
+    "pageBackgroundColor": "#EAF6F6",
+    "fontColor": "#3D5A80",
+    "titleColor": "#E0C2A0"
   },
   {
     "name": "Slate Grey",
@@ -262,6 +294,13 @@ const colors = [
     "pageBackgroundColor": "#e67e22",
     "fontColor": "#ffffff",
     "titleColor": "#e74c3c"
+  },
+  {
+    "name": "Blossom Pink",
+    "cardBackgroundColor": "#ffc0cb",
+    "pageBackgroundColor": "#ffb2d0",
+    "fontColor": "#ffffff",
+    "titleColor": "#e7a1b0"
   },
   {
     "name": "Teal Serenity",
@@ -318,6 +357,13 @@ const colors = [
     "pageBackgroundColor": "#f39c12",
     "fontColor": "#2c3e50",
     "titleColor": "#27ae60"
+  },
+  { // New Pastel Theme
+    "name": "Peach & Cream",
+    "cardBackgroundColor": "#FFDAC1",
+    "pageBackgroundColor": "#FFF5E1",
+    "fontColor": "#7B4D4D",
+    "titleColor": "#B5CDA3"
   },
   {
     "name": "Aqua Harmony",
@@ -381,6 +427,13 @@ const colors = [
     "pageBackgroundColor": "#228b22",
     "fontColor": "#ffffff",
     "titleColor": "#00ff7f"
+  },
+  { // New Pastel Theme
+    "name": "Lilac Haze",
+    "cardBackgroundColor": "#D8BFD8",
+    "pageBackgroundColor": "#E6E6FA",
+    "fontColor": "#483D8B",
+    "titleColor": "#FDFD96"
   },
   {
     "name": "Icy Blue",

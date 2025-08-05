@@ -178,7 +178,7 @@ const Customize = (props) => {
       return setAlert(true)
     }
 
-    fetch(`https://yze-bio-production.up.railway.app/api/UserExists/${nickname}`)
+    fetch(`https://yze-bio-production.up.railway.app/api/UserExists/${nickname.toLowerCase()}`)
     .then(res => res.json())
     .then(data => {
       if(data) {
@@ -335,6 +335,11 @@ const Customize = (props) => {
 
   }
 
+  const handleDeleteLink = (e, indexToDelete) => {
+    e.stopPropagation(); // Impede que o clique acione o modo de edição do link.
+    setLinks(links.filter((_, index) => index !== indexToDelete));
+  };
+
   return (  
     <div className="edit-card-wrapper" style={{backgroundColor: palette[0], fontFamily: fontFamily}}>
 { showLayout && (
@@ -363,7 +368,7 @@ const Customize = (props) => {
 
             <div className='interest-wrapper'>  
               { (selectedHobbies.length !== 0 && ( selectedHobbies.map((item) => (
-                    <span className='interest-span' style={{ backgroundColor: palette[0]}} >{item.emoji} {item.interest}
+                    <span className='interest-span' style={{ backgroundColor: palette[0], color: palette[3]}} >{item.emoji} {item.interest}
                       <div onClick={() => setSelectedHobbies(selectedHobbies.filter(curr => curr !== item))} className="deleter"><FontAwesomeIcon size='2xs' icon={faX} /></div>
                     </span>
                 ))))
@@ -407,26 +412,32 @@ const Customize = (props) => {
 
            
             <div className='card-links'>
-              { (links.length > 0 && links.map((item, index) => (
-                  <div style={{margin:'8px', cursor: 'pointer'}} onClick={() => {setAddingLink(true); setEditingIndex(index); console.log(availableLinks.filter(link => link.type === item.type)[0]); setSearchLink(availableLinks.filter(link => link.type === item.type)[0]); setNewLinkUrl(item.value)}}>
-                      {item.type === 'twitter' && <FontAwesomeIcon icon={faXTwitter} size="2x" color={palette[3]}className='icon' />}
-                      {item.type === 'github' && <FontAwesomeIcon icon={faGithub} size="2x" color={palette[3]}className='icon' />}
-                      {item.type === 'instagram' && <FontAwesomeIcon icon={faInstagram} size="2x" color={palette[3]}className='icon' />}
-                      {item.type === 'tiktok' && <FontAwesomeIcon icon={faTiktok} size="2x" color={palette[3]}className='icon' />}
-                      {item.type === 'discord' && <FontAwesomeIcon icon={faDiscord} size="2x" color={palette[3]}className='icon' />}
-                      {item.type === 'lastfm' && <FontAwesomeIcon icon={faSquareLastfm} size="2x" color={palette[3]}className='icon' />}
-                      {item.type === 'steam' && <FontAwesomeIcon icon={faSteam} size="2x" color={palette[3]}className='icon' />}
-                      {item.type === 'pinterest' && <FontAwesomeIcon icon={faPinterest} size="2x" color={palette[3]}className='icon' />}
-                      {item.type === 'letterboxd' && <FontAwesomeIcon icon={faLetterboxd} size="2x" color={palette[3]}className='icon' />}
-                      {item.type === 'twitch' && <FontAwesomeIcon icon={faTwitch} size="2x" color={palette[3]}className='icon' />}
-                      {item.type === 'spotify' && <FontAwesomeIcon icon={faSpotify} size="2x" color={palette[3]}className='icon' />}
-                      {item.type === 'youtube' && <FontAwesomeIcon icon={faYoutube} size="2x" color={palette[3]}className='icon' />}
-                      {item.type === 'tumblr' && <FontAwesomeIcon icon={faTumblr} size="2x" color={palette[3]}className='icon' />}
-                      {item.type === 'reddit' && <FontAwesomeIcon icon={faReddit} size="2x" color={palette[3]}className='icon' />}
-                      {item.type === 'site' && <FontAwesomeIcon icon={faLink} size="2x" color={palette[3]}className='icon' />}          
-                  </div>
-                )))
-                ||
+                  { (links.length > 0 && links.map((item, index) => (
+                      // 1. Container para posicionar o ícone e o botão de deletar
+                      <div className="link-item-container" key={index}> 
+                          <div className="deleter" onClick={(e) => handleDeleteLink(e, index)}>
+                              <FontAwesomeIcon size='2xs' icon={faX} />
+                          </div>
+                          <div style={{margin:'8px', cursor: 'pointer'}} onClick={() => {setAddingLink(true); setEditingIndex(index); setSearchLink(availableLinks.filter(link => link.type === item.type)[0]); setNewLinkUrl(item.value)}}>
+                              {item.type === 'twitter' && <FontAwesomeIcon icon={faXTwitter} size="2x" color={palette[3]}className='icon' />}
+                              {item.type === 'github' && <FontAwesomeIcon icon={faGithub} size="2x" color={palette[3]}className='icon' />}
+                              {item.type === 'instagram' && <FontAwesomeIcon icon={faInstagram} size="2x" color={palette[3]}className='icon' />}
+                              {item.type === 'tiktok' && <FontAwesomeIcon icon={faTiktok} size="2x" color={palette[3]}className='icon' />}
+                              {item.type === 'discord' && <FontAwesomeIcon icon={faDiscord} size="2x" color={palette[3]}className='icon' />}
+                              {item.type === 'lastfm' && <FontAwesomeIcon icon={faSquareLastfm} size="2x" color={palette[3]}className='icon' />}
+                              {item.type === 'steam' && <FontAwesomeIcon icon={faSteam} size="2x" color={palette[3]}className='icon' />}
+                              {item.type === 'pinterest' && <FontAwesomeIcon icon={faPinterest} size="2x" color={palette[3]}className='icon' />}
+                              {item.type === 'letterboxd' && <FontAwesomeIcon icon={faLetterboxd} size="2x" color={palette[3]}className='icon' />}
+                              {item.type === 'twitch' && <FontAwesomeIcon icon={faTwitch} size="2x" color={palette[3]}className='icon' />}
+                              {item.type === 'spotify' && <FontAwesomeIcon icon={faSpotify} size="2x" color={palette[3]}className='icon' />}
+                              {item.type === 'youtube' && <FontAwesomeIcon icon={faYoutube} size="2x" color={palette[3]}className='icon' />}
+                              {item.type === 'tumblr' && <FontAwesomeIcon icon={faTumblr} size="2x" color={palette[3]}className='icon' />}
+                              {item.type === 'reddit' && <FontAwesomeIcon icon={faReddit} size="2x" color={palette[3]}className='icon' />}
+                              {item.type === 'site' && <FontAwesomeIcon icon={faLink} size="2x" color={palette[3]}className='icon' />}      
+                          </div>
+                      </div>
+                    )))
+                    ||
                     <div className="empty-links">
                       <span style={{color: palette[3]}}>Links</span>
                       <div className="adder">
@@ -555,7 +566,7 @@ const Customize = (props) => {
     {!props.edit && (
       <div className="creating-card-div" style={{backgroundColor: palette[1]}}>
         <h4 style={{fontFamily: fontFamily}}>Name your page:</h4>
-        <FocusInput palette={palette} className='naming-page' style={{ color: palette[3], backgroundColor: palette[1], borderBottomColor: palette[2]}} type="text"  placeholder="Your card name" value={nickname} onChange={(e) => setNickname(e.target.value)} />
+        <FocusInput palette={palette} className='naming-page' style={{ color: palette[3], backgroundColor: palette[1], borderBottomColor: palette[2]}} type="text"  placeholder="Your card name" value={nickname} onChange={(e) => setNickname(e.target.value.replace(/\s/g, '').toLowerCase())} />
         <CreateButton palette={palette} style={{fontFamily: fontFamily}} className="create-button" onClick={() => pushCard()}>Create</CreateButton>
       </div>)}
 

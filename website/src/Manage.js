@@ -32,10 +32,9 @@ const Manage = () => {
 
 
     const handleDelete = (nickname, index) => {
-        const updatedCards = [...cards].reverse(); 
-        updatedCards.splice(index, 1); 
+        const updatedCards = cards.filter(item => item.nickname !== nickname)
         setCards(updatedCards); 
-        
+
         fetch(`https://yze-bio-production.up.railway.app/api/User/${nickname}?key=${process.env.REACT_APP_API_KEY}`, {
             method: 'DELETE',
             headers: {

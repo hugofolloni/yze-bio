@@ -1578,6 +1578,7 @@ a {
     align-items: center;
     justify-content: flex-start;
     flex-flow: row;
+    flex-wrap: wrap;
   }
 
   .home-main{
@@ -1675,4 +1676,18 @@ a {
   .delete-modal {
     top: 40vh
   } 
+}
+
+.link-item-container {
+  position: relative;
+  display: inline-block; /* Ou flex, dependendo do seu layout */
+}
+
+/* Reutilizando a classe deleter que você já deve ter estilizado */
+.link-item-container .deleter {
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  /* Os outros estilos como background, cor, etc., virão da sua classe .deleter global */
 }
